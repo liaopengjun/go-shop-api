@@ -1,0 +1,15 @@
+basePath: 这里写base path
+host: 这里写接口服务的host
+info:
+  contact:
+    email: 1337404942@qq.com
+    url: http://www.swagger.io/support
+  description: go-admin
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: lpjcode
+  version: "1.0"
+paths: {}
+swagger: "2.0"

@@ -1,0 +1,41 @@
+application:
+  mode: "dev"
+  port: 8189
+  upload_type: local
+  user_redis: true
+log:
+  level: info
+  format: console
+  prefix: '[lpj-go-admin]'
+  director: log
+  showLine: true
+  encode-level: LowercaseColorLevelEncoder
+  stacktrace-key: stacktrace
+  log-in-console: true
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  user: root
+  password: root
+  db: go-admin
+  max_open_conns: 100
+  max_idle_conns: 20
+redis:
+  host: "127.0.0.1"
+  password: ""
+  pool_size: 100
+  port: 6379
+  db: 0
+jwt:
+  buffer-time: 86400
+  expires-time: 86400
+  issuer: lpjcode
+  signing-key: e4fc1189-a8b5-4cff-bdca-101a1e4e3b65
+casbin:
+  model-path: ./config/rbac_model.conf
+local:
+  path: uploads/file
+  image_max_size : 5
+  image_allow_exits : .jpg,.jpeg,.png
+
+
