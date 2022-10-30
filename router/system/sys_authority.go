@@ -8,7 +8,7 @@ import (
 type AuthorityRouter struct {
 }
 
-// InitUserRouter 用户模块路由
+// InitUserRouter 用户权限模块路由
 func (a *AuthorityRouter) InitAuthorityRouter(Router *gin.RouterGroup) {
 	authorityRouter := Router.Group("authority")
 	var authorityApi = v1.ApiGroupApp.SystemApiGroup.AuthorityApi

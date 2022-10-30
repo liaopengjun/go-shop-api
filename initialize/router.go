@@ -15,11 +15,11 @@ import (
 func Router() *gin.Engine {
 	var Router = gin.Default()
 	systemRouter := router.RouterGroupApp.System
-	//api接口文档
-	Router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler))
+	shopRouter := router.RouterGroupApp.Shop
 
-	//跨域
-	//Router.Use(middleware.Cors())
+	Router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler)) //api接口文档
+
+	// Router.Use(middleware.Cors()) //跨域
 	PrivateGroup := Router.Group("/api")
 	PrivateGroup.StaticFS(global.GA_CONFIG.LocalConfig.Path, http.Dir(global.GA_CONFIG.LocalConfig.Path)) // 为用户头像和文件提供静态地址
 	//基础路由部分
@@ -34,5 +34,9 @@ func Router() *gin.Engine {
 		systemRouter.InitUploadRoute(PrivateGroup)     //上传文件
 		systemRouter.InitLoginLogRouter(PrivateGroup)  //登陆日志
 	}
+
+	ShopGroup := Router.Group("/shop")
+	shopRouter.InitShopBasicRouter(ShopGroup) //商城基础信息路由
+
 	return Router
 }

@@ -88,5 +88,3 @@ func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 		return nil, TokenInvalid
 	}
 }
-
-// CreateTokenByOldToken 刷新token

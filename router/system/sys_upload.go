@@ -8,7 +8,8 @@ import (
 type UploadRoute struct {
 }
 
-func (r UploadRoute) InitUploadRoute(Router *gin.RouterGroup) {
+// InitUploadRoute 上传文件路由
+func (r *UploadRoute) InitUploadRoute(Router *gin.RouterGroup) {
 	fileRouter := Router.Group("file")
 	var uploadApi = v1.ApiGroupApp.SystemApiGroup.UploadApi
 	{

@@ -1,9 +1,7 @@
 package system
 
 import (
-	"encoding/json"
 	"errors"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/go-redis/redis/v8"
@@ -17,8 +15,6 @@ import (
 	"go-admin/pkg/jwt"
 	"go-admin/utils"
 	"go.uber.org/zap"
-	"net/url"
-	"strings"
 )
 
 type BaseApi struct {
@@ -55,35 +51,6 @@ func (b *BaseApi) Register(c *gin.Context) {
 	}
 	//4.返回响应
 	response.ResponseSuccess(c, "创建成功")
-}
-
-func (b *BaseApi) Demo(c *gin.Context) {
-
-	//1.校验登录参数
-	var p = new(ParamMerchantBalance)
-
-	//2.校验参数
-	if err := c.ShouldBindJSON(p); err != nil {
-		response.ResponseError(c, config.CodeInvalidParam)
-		return
-	}
-
-	strByte, _ := json.Marshal(&p)
-	var m map[string]interface{}
-	docoder := json.NewDecoder(strings.NewReader(string(strByte)))
-	docoder.UseNumber()
-	_ = docoder.Decode(&m)
-	//_ = json.Unmarshal(strByte, &m)
-
-	var urlS url.URL
-	q := urlS.Query()
-	for k, v := range m {
-		q.Add(k, fmt.Sprintf("%v", v))
-	}
-	queryStr := q.Encode()
-	queryStr, _ = url.QueryUnescape(queryStr)
-	fmt.Println(queryStr)
-
 }
 
 // Login 登录用户

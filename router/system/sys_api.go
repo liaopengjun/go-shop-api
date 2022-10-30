@@ -8,7 +8,7 @@ import (
 type SysApiRouter struct {
 }
 
-// InitApiRouter 用户模块路由
+// InitApiRouter api模块路由
 func (a *SysApiRouter) InitApiRouter(Router *gin.RouterGroup) {
 	sysApiRouter := Router.Group("sys_api")
 	var SysApi = v1.ApiGroupApp.SystemApiGroup.SysApi

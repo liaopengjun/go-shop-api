@@ -14,7 +14,6 @@ func (s *BaseRouter) InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 	var baseApi = v1.ApiGroupApp.SystemApiGroup.BaseApi
 	{
 		baseRouter.POST("login", baseApi.Login) //登录
-		baseRouter.POST("demo", baseApi.Demo)   //登录
 	}
 	return baseRouter
 }

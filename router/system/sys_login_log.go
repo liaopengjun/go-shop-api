@@ -8,7 +8,7 @@ import (
 type LoginLogRouter struct {
 }
 
-// InitMenuRouter 菜单模块路由
+// InitLoginLogRouter 登录日志路由
 func (s *UserRouter) InitLoginLogRouter(Router *gin.RouterGroup) {
 	logRouter := Router.Group("log")
 	var LogApi = v1.ApiGroupApp.SystemApiGroup.LoginLogApi
