@@ -22,7 +22,6 @@ type MenuApi struct {
 func (a *MenuApi) GetMenu(c *gin.Context) {
 
 }
-
 func (a *MenuApi) AddMenu(c *gin.Context) {
 	//1.获取注册请求参数结构体
 	var p = new(system.SysMenu)

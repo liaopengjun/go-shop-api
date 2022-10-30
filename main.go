@@ -7,18 +7,6 @@ import (
 	"go-admin/initialize"
 )
 
-// @title lpjcode
-// @version 1.0
-// @description go-admin
-// @termsOfService http://swagger.io/terms/
-// @contact.name
-// @contact.url http://www.swagger.io/support
-// @contact.email 1337404942@qq.com
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-// @host 这里写接口服务的host
-// @BasePath 这里写base path
-
 func main() {
 	global.GA_VP = initialize.Viper() // 初始化Viper
 	global.GA_LOG = initialize.Zap()  // 初始化zap日志库
