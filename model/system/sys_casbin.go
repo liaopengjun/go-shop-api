@@ -1,6 +1,6 @@
 package system
 
-type CasbinModel struct {
+type SysCasbinModel struct {
 	Ptype       string `json:"ptype" gorm:"column:ptype"`
 	AuthorityId string `json:"rolename" gorm:"column:v0"`
 	Path        string `json:"path" gorm:"column:v1"`
