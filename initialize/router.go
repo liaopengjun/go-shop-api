@@ -37,6 +37,7 @@ func Router() *gin.Engine {
 
 	ShopGroup := Router.Group("/shop")
 	shopRouter.InitShopBasicRouter(ShopGroup) //商城基础信息路由
+	shopRouter.InitShopGoodsRouter(ShopGroup) //商城基础信息路由
 
 	return Router
 }

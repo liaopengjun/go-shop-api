@@ -1,8 +1,9 @@
 package shop
 
 type ApiShopGroup struct {
-	ShopBasicApi
+	ShopHomeApi
 	ShopUserApi
 	ShopGoodsApi
 	ShopOrderApi
+	ShopAddressApi
 }
