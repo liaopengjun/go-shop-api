@@ -39,6 +39,7 @@ func Router() *gin.Engine {
 	shopRouter.InitShopGoodsRouter(ShopGroup)   //商城商品模块路由
 	shopRouter.InitShopAddressRouter(ShopGroup) //商城用户地址路由
 	shopRouter.InitShopUserRouter(ShopGroup)    //商城用户路由
+	shopRouter.InitShopOrderRouter(ShopGroup)   //商城订单路由
 
 	return Router
 }
