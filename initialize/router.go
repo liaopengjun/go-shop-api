@@ -13,18 +13,17 @@ import (
 
 //Router 初始化路由
 func Router() *gin.Engine {
+
 	var Router = gin.Default()
 	systemRouter := router.RouterGroupApp.System
 	shopRouter := router.RouterGroupApp.Shop
 
-	Router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler)) //api接口文档
-
 	// Router.Use(middleware.Cors()) //跨域
+	Router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler)) //api接口文档
 	PrivateGroup := Router.Group("/api")
 	PrivateGroup.StaticFS(global.GA_CONFIG.LocalConfig.Path, http.Dir(global.GA_CONFIG.LocalConfig.Path)) // 为用户头像和文件提供静态地址
-	//基础路由部分
+
 	systemRouter.InitBaseRouter(PrivateGroup)
-	//中间件部分
 	PrivateGroup.Use(middleware.JWTAuth(), middleware.Casbin())
 	{
 		systemRouter.InitMenuRouter(PrivateGroup)      //菜单路由
@@ -36,8 +35,10 @@ func Router() *gin.Engine {
 	}
 
 	ShopGroup := Router.Group("/shop")
-	shopRouter.InitShopBasicRouter(ShopGroup) //商城基础信息路由
-	shopRouter.InitShopGoodsRouter(ShopGroup) //商城基础信息路由
+	shopRouter.InitShopBasicRouter(ShopGroup)   //商城基础信息路由
+	shopRouter.InitShopGoodsRouter(ShopGroup)   //商城商品模块路由
+	shopRouter.InitShopAddressRouter(ShopGroup) //商城用户地址路由
+	shopRouter.InitShopUserRouter(ShopGroup)    //商城用户路由
 
 	return Router
 }

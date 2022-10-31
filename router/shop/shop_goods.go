@@ -12,7 +12,7 @@ type ShopGoodsRouter struct {
 func (s *ShopGoodsRouter) InitShopGoodsRouter(Router *gin.RouterGroup) (R gin.IRoutes) {
 	var ShopGoodsApi = v1.ApiGroupApp.ShopApiGroup.ShopGoodsApi
 	{
-		Router.GET("search", ShopGoodsApi.SearchGoodsList)     //搜索商品
+		Router.POST("search", ShopGoodsApi.SearchGoodsList)    //搜索商品
 		Router.POST("categories", ShopGoodsApi.GoodCategories) //商品分类
 		Router.POST("goods-detail", ShopGoodsApi.GoodDetail)   //商品详情
 		Router.POST("add-cart", ShopGoodsApi.AddShopCart)      //加入购物车
