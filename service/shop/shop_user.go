@@ -52,7 +52,7 @@ func (s *UserService) Login(p *request.ShopUserParam) (user *shop.ShopUser, err 
 	return user, err
 }
 
-func (u *UserService) GetUserInfo(user_id int) (user *shop.ShopUser, err error) {
+func (u *UserService) GetUserInfo(user_id uint) (user *shop.ShopUser, err error) {
 	user, err = shop.GetUserDetail(user_id)
 	if err != nil {
 		return nil, err
@@ -69,11 +69,11 @@ func (u *UserService) EditUser(p *request.ShopEditUserParam) error {
 		return err
 	}
 
-	oldPassword := user.PasswordMd5
+	//oldPassword := user.PasswordMd5
 	newPassword := utils.MD5V(p.PassWord)
-	if oldPassword != newPassword {
-		return response.ErrorPasswordWrong
-	}
+	//if oldPassword != newPassword {
+	//	return response.ErrorPasswordWrong
+	//}
 
 	userdata := &shop.ShopUser{
 		UserId:        user.UserId,

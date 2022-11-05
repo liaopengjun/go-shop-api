@@ -36,8 +36,7 @@ func Router() *gin.Engine {
 
 	ShopGroup := Router.Group("/shop")
 	shopRouter.InitShopBasicRouter(ShopGroup) //商城基础信息路由
-
-	PrivateGroup.Use(middleware.ShopJwt())
+	ShopGroup.Use(middleware.ShopJwt())
 	{
 		shopRouter.InitShopGoodsRouter(ShopGroup)   //商城商品模块路由
 		shopRouter.InitShopAddressRouter(ShopGroup) //商城用户地址路由

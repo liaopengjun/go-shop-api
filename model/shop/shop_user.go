@@ -21,7 +21,7 @@ func CreateShopUser(u *ShopUser) error {
 	return global.GA_DB.Create(&u).Error
 }
 
-func GetUserDetail(user_id int) (user *ShopUser, err error) {
+func GetUserDetail(user_id uint) (user *ShopUser, err error) {
 	err = global.GA_DB.Where("user_id = ? ", user_id).First(&user).Error
 	return user, err
 }

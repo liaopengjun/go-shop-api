@@ -134,8 +134,12 @@ func (u *ShopUserApi) Register(c *gin.Context) {
 
 // UserInfo 用户信息
 func (u *ShopUserApi) UserInfo(c *gin.Context) {
-	userId, _ := c.Get("shop_userid")
-	user, err := userService.GetUserInfo(userId.(int))
+	shop_userid, ok := c.Get("shop_userid")
+	if !ok {
+		response.ResponseError(c, config.CodeNeedLogin)
+		return
+	}
+	user, err := userService.GetUserInfo(shop_userid.(uint))
 	if err != nil {
 		global.GA_LOG.Error("获取用户失败", zap.Error(err))
 		response.ResponseError(c, config.CodeUserExist)
@@ -163,7 +167,6 @@ func (u *ShopUserApi) EditUserInfo(c *gin.Context) {
 	err := userService.EditUser(p)
 	if err != nil {
 		global.GA_LOG.Error("编辑用户信息失败", zap.Error(err))
-
 		if errors.Is(err, shopResponse.ErrorPasswordWrong) {
 			response.ResponseError(c, config.CodeInvalidPassword)
 			return
