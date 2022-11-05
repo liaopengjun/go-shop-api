@@ -24,7 +24,7 @@ func Router() *gin.Engine {
 	PrivateGroup.StaticFS(global.GA_CONFIG.LocalConfig.Path, http.Dir(global.GA_CONFIG.LocalConfig.Path)) // 为用户头像和文件提供静态地址
 
 	systemRouter.InitBaseRouter(PrivateGroup)
-	PrivateGroup.Use(middleware.JWTAuth(), middleware.Casbin())
+	PrivateGroup.Use(middleware.SysadminJwt(), middleware.Casbin())
 	{
 		systemRouter.InitMenuRouter(PrivateGroup)      //菜单路由
 		systemRouter.InitUserRouter(PrivateGroup)      //用户路由
@@ -35,11 +35,15 @@ func Router() *gin.Engine {
 	}
 
 	ShopGroup := Router.Group("/shop")
-	shopRouter.InitShopBasicRouter(ShopGroup)   //商城基础信息路由
-	shopRouter.InitShopGoodsRouter(ShopGroup)   //商城商品模块路由
-	shopRouter.InitShopAddressRouter(ShopGroup) //商城用户地址路由
-	shopRouter.InitShopUserRouter(ShopGroup)    //商城用户路由
-	shopRouter.InitShopOrderRouter(ShopGroup)   //商城订单路由
+	shopRouter.InitShopBasicRouter(ShopGroup) //商城基础信息路由
+
+	PrivateGroup.Use(middleware.ShopJwt())
+	{
+		shopRouter.InitShopGoodsRouter(ShopGroup)   //商城商品模块路由
+		shopRouter.InitShopAddressRouter(ShopGroup) //商城用户地址路由
+		shopRouter.InitShopUserRouter(ShopGroup)    //商城用户路由
+		shopRouter.InitShopOrderRouter(ShopGroup)   //商城订单路由
+	}
 
 	return Router
 }

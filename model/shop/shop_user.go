@@ -1,9 +1,7 @@
 package shop
 
 import (
-	"errors"
 	"go-admin/global"
-	"gorm.io/gorm"
 	"time"
 )
 
@@ -19,13 +17,15 @@ type ShopUser struct {
 	CreateTime    time.Time `json:"createTime" form:"createTime" gorm:"column:create_time;comment:注册时间;type:datetime"`
 }
 
-func CheckUser(username string) error {
-	if !errors.Is(global.GA_DB.Where("login_name = ?", username).First(&ShopUser{}).Error, gorm.ErrRecordNotFound) {
-		return errors.New("存在相同用户名")
-	}
-	return nil
-}
-
 func CreateShopUser(u *ShopUser) error {
 	return global.GA_DB.Create(&u).Error
+}
+
+func GetUserDetail(user_id int) (user *ShopUser, err error) {
+	err = global.GA_DB.Where("user_id = ? ", user_id).First(&user).Error
+	return user, err
+}
+
+func UpdateUser(u *ShopUser) error {
+	return global.GA_DB.Updates(&u).Error
 }

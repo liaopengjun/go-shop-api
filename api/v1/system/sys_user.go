@@ -13,6 +13,7 @@ import (
 	"go-admin/model/system/request"
 	userResponse "go-admin/model/system/response"
 	"go-admin/pkg/jwt"
+	commonRedis "go-admin/pkg/redis"
 	"go-admin/utils"
 	"go.uber.org/zap"
 )
@@ -98,10 +99,11 @@ func (b *BaseApi) Login(c *gin.Context) {
 	//5.redis 存储 token
 	if global.GA_CONFIG.ApplicationConfig.UserRedis {
 		//如果旧token未自动生效删除旧token后存储token
-		userToken, err := userService.GetUserToken(p.Username)
+		key := "user:sysadmin:token:" + p.Username
+		userToken, err := commonRedis.GetUserToken(key)
 		if err == redis.Nil {
 			//写入用户token
-			err = userService.SetUserToken(token, p.Username)
+			err = commonRedis.SetUserToken(key, token)
 			if err != nil {
 				global.GA_LOG.Error("set redis token err:", zap.Error(err))
 				//系统繁忙
@@ -115,14 +117,14 @@ func (b *BaseApi) Login(c *gin.Context) {
 		} else {
 			// 将旧token写入黑名单
 			if userToken != "" {
-				err = userService.SetUserTokenBlackList(userToken)
+				err = commonRedis.SetUserTokenBlackList(userToken)
 				if err != nil {
 					global.GA_LOG.Error("old_token set blacklist err:", zap.Error(err))
 					//系统繁忙
 					response.ResponseError(c, config.CodeServerBusy)
 				}
 				// 重新写入token
-				err = userService.SetUserToken(token, p.Username)
+				err = commonRedis.SetUserToken(key, token)
 				if err != nil {
 					global.GA_LOG.Error("set redis token err2:", zap.Error(err))
 					//系统繁忙
@@ -186,7 +188,7 @@ func (b *BaseApi) Logout(c *gin.Context) {
 	//1将token写入黑名单
 	token := c.Request.Header.Get("x-token")
 	if global.GA_CONFIG.ApplicationConfig.UserRedis {
-		err := userService.SetUserTokenBlackList(token)
+		err := commonRedis.SetUserTokenBlackList(token)
 		if err != nil {
 			response.ResponseError(c, config.CodeServerBusy)
 			return
