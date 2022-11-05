@@ -1,5 +1,7 @@
 package shop
 
+import "go-admin/service"
+
 type ApiShopGroup struct {
 	ShopHomeApi
 	ShopUserApi
@@ -7,3 +9,5 @@ type ApiShopGroup struct {
 	ShopOrderApi
 	ShopAddressApi
 }
+
+var userService = service.ServiceGroupApp.ShopServiceGroup.UserService
