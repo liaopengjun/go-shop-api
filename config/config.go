@@ -40,6 +40,7 @@ type LogConfig struct {
 	Format        string `mapstructure:"format"`         // 输出
 	Prefix        string `mapstructure:"prefix"`         // 日志前缀
 	Director      string `mapstructure:"director"`       // 日志文件夹
+	ShopDirector  string `mapstructure:"shop-director"`  // 商城日志文件夹
 	ShowLine      bool   `mapstructure:"show-line"`      // 显示行
 	EncodeLevel   string `mapstructure:"encode-level"`   // 编码级
 	StacktraceKey string `mapstructure:"stacktrace-key"` // 栈名

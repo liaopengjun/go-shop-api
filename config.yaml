@@ -6,8 +6,9 @@ application:
 log:
   level: info
   format: console
-  prefix: '[lpj-go-admin]'
-  director: log
+  prefix: '[go-admin]'
+  director: log/admin
+  shop-director: log/shop
   showLine: true
   encode-level: LowercaseColorLevelEncoder
   stacktrace-key: stacktrace

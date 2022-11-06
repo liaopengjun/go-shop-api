@@ -25,7 +25,7 @@ type ShopUserApi struct {
 func (u *ShopUserApi) Login(c *gin.Context) {
 	var p = new(request.ShopUserParam)
 	if err := c.ShouldBindJSON(p); err != nil {
-		global.GA_LOG.Error("商城登录请求参数有误", zap.Error(err))
+		global.GA_SHOPLOG.Error("商城登录请求参数有误", zap.Error(err))
 		//判断err是不是validator类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
@@ -39,14 +39,14 @@ func (u *ShopUserApi) Login(c *gin.Context) {
 
 	user, err := userService.Login(p)
 	if err != nil {
-		global.GA_LOG.Error("用户登录失败", zap.Error(err))
+		global.GA_SHOPLOG.Error("用户登录失败", zap.Error(err))
 		response.ResponseError(c, config.CodeInvalidPassword)
 		return
 	}
 
 	token, err := tokenNext(user)
 	if err != nil {
-		global.GA_LOG.Error("issue shopuser token err:", zap.Error(err))
+		global.GA_SHOPLOG.Error("issue shopuser token err:", zap.Error(err))
 		//系统繁忙
 		response.ResponseError(c, config.CodeServerBusy)
 	}
@@ -59,13 +59,13 @@ func (u *ShopUserApi) Login(c *gin.Context) {
 			//写入用户token
 			err = commonRedis.SetUserToken(key, token)
 			if err != nil {
-				global.GA_LOG.Error("set redis token err:", zap.Error(err))
+				global.GA_SHOPLOG.Error("set redis token err:", zap.Error(err))
 				//系统繁忙
 				response.ResponseError(c, config.CodeServerBusy)
 			}
 
 		} else if err != nil {
-			global.GA_LOG.Error("get redis token err:", zap.Error(err))
+			global.GA_SHOPLOG.Error("get redis token err:", zap.Error(err))
 			//系统繁忙
 			response.ResponseError(c, config.CodeServerBusy)
 		} else {
@@ -73,14 +73,14 @@ func (u *ShopUserApi) Login(c *gin.Context) {
 			if userToken != "" {
 				err = commonRedis.SetUserTokenBlackList(userToken)
 				if err != nil {
-					global.GA_LOG.Error("old_token set blacklist err:", zap.Error(err))
+					global.GA_SHOPLOG.Error("old_token set blacklist err:", zap.Error(err))
 					//系统繁忙
 					response.ResponseError(c, config.CodeServerBusy)
 				}
 				// 重新写入token
 				err = commonRedis.SetUserToken(key, token)
 				if err != nil {
-					global.GA_LOG.Error("set redis token err2:", zap.Error(err))
+					global.GA_SHOPLOG.Error("set redis token err2:", zap.Error(err))
 					//系统繁忙
 					response.ResponseError(c, config.CodeServerBusy)
 				}
@@ -112,7 +112,7 @@ func (u *ShopUserApi) OutLogin(c *gin.Context) {
 func (u *ShopUserApi) Register(c *gin.Context) {
 	var p = new(request.ShopUserParam)
 	if err := c.ShouldBindJSON(p); err != nil {
-		global.GA_LOG.Error("商城注册请求参数有误", zap.Error(err))
+		global.GA_SHOPLOG.Error("商城注册请求参数有误", zap.Error(err))
 		//判断err是不是validator类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
@@ -125,7 +125,7 @@ func (u *ShopUserApi) Register(c *gin.Context) {
 	}
 	err := userService.Register(p)
 	if err != nil {
-		global.GA_LOG.Error("用户注册失败", zap.Error(err))
+		global.GA_SHOPLOG.Error("用户注册失败", zap.Error(err))
 		response.ResponseError(c, config.CodeUserExist)
 		return
 	}
@@ -141,7 +141,7 @@ func (u *ShopUserApi) UserInfo(c *gin.Context) {
 	}
 	user, err := userService.GetUserInfo(shop_userid.(uint))
 	if err != nil {
-		global.GA_LOG.Error("获取用户失败", zap.Error(err))
+		global.GA_SHOPLOG.Error("获取用户失败", zap.Error(err))
 		response.ResponseError(c, config.CodeUserExist)
 		return
 	}
@@ -152,7 +152,7 @@ func (u *ShopUserApi) UserInfo(c *gin.Context) {
 func (u *ShopUserApi) EditUserInfo(c *gin.Context) {
 	var p = new(request.ShopEditUserParam)
 	if err := c.ShouldBindJSON(p); err != nil {
-		global.GA_LOG.Error("商城编辑用户请求参数有误", zap.Error(err))
+		global.GA_SHOPLOG.Error("商城编辑用户请求参数有误", zap.Error(err))
 		//判断err是不是validator类型
 		errs, ok := err.(validator.ValidationErrors)
 		if !ok {
@@ -166,7 +166,7 @@ func (u *ShopUserApi) EditUserInfo(c *gin.Context) {
 
 	err := userService.EditUser(p)
 	if err != nil {
-		global.GA_LOG.Error("编辑用户信息失败", zap.Error(err))
+		global.GA_SHOPLOG.Error("编辑用户信息失败", zap.Error(err))
 		if errors.Is(err, shopResponse.ErrorPasswordWrong) {
 			response.ResponseError(c, config.CodeInvalidPassword)
 			return

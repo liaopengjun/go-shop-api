@@ -12,7 +12,7 @@ import (
 )
 
 //Zap 日志
-func Zap() (logger *zap.Logger) {
+func Zap(Director string) (logger *zap.Logger) {
 	// 判断是否有Director文件夹
 	if ok, _ := utils.PathExists(global.GA_CONFIG.LogConfig.Director); !ok {
 		fmt.Printf("create %v directory\n", global.GA_CONFIG.LogConfig.Director)
@@ -36,10 +36,10 @@ func Zap() (logger *zap.Logger) {
 	})
 
 	cores := [...]zapcore.Core{
-		getEncoderCore(fmt.Sprintf("./%s/server_debug.log", global.GA_CONFIG.LogConfig.Director), debugPriority),
-		getEncoderCore(fmt.Sprintf("./%s/server_info.log", global.GA_CONFIG.LogConfig.Director), infoPriority),
-		getEncoderCore(fmt.Sprintf("./%s/server_warn.log", global.GA_CONFIG.LogConfig.Director), warnPriority),
-		getEncoderCore(fmt.Sprintf("./%s/server_error.log", global.GA_CONFIG.LogConfig.Director), errorPriority),
+		getEncoderCore(fmt.Sprintf("./%s/server_debug.log", Director), debugPriority),
+		getEncoderCore(fmt.Sprintf("./%s/server_info.log", Director), infoPriority),
+		getEncoderCore(fmt.Sprintf("./%s/server_warn.log", Director), warnPriority),
+		getEncoderCore(fmt.Sprintf("./%s/server_error.log", Director), errorPriority),
 	}
 	logger = zap.New(zapcore.NewTee(cores[:]...), zap.AddCaller())
 	if global.GA_CONFIG.LogConfig.ShowLine {

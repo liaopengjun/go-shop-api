@@ -11,12 +11,13 @@ import (
 )
 
 var (
-	GA_VP     *viper.Viper
-	GA_LOG    *zap.Logger
-	GA_CONFIG config.AppConfig
-	GA_DB     *gorm.DB
-	GA_REDIS  *redis.Client
-	GA_TRANS  ut.Translator
+	GA_VP      *viper.Viper
+	GA_LOG     *zap.Logger
+	GA_SHOPLOG *zap.Logger
+	GA_CONFIG  config.AppConfig
+	GA_DB      *gorm.DB
+	GA_REDIS   *redis.Client
+	GA_TRANS   ut.Translator
 )
 
 type GA_MODEL struct {
