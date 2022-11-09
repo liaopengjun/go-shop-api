@@ -12,3 +12,4 @@ type ApiShopGroup struct {
 
 var userService = service.ServiceGroupApp.ShopServiceGroup.UserService
 var carouselService = service.ServiceGroupApp.ShopServiceGroup.CarouselService
+var goodsService = service.ServiceGroupApp.ShopServiceGroup.ShopGoodsService
