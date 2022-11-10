@@ -11,10 +11,10 @@ import (
 	"time"
 )
 
-type UserService struct {
+type ShopUserService struct {
 }
 
-func (u *UserService) Register(p *request.ShopUserParam) (err error) {
+func (u *ShopUserService) Register(p *request.ShopUserParam) (err error) {
 	// 检查用户是否已注册
 	if !errors.Is(global.GA_DB.Where("login_name = ?", p.UserName).First(&shop.ShopUser{}).Error, gorm.ErrRecordNotFound) {
 		return response.ErrorUserExit
@@ -36,7 +36,7 @@ func (u *UserService) Register(p *request.ShopUserParam) (err error) {
 	return nil
 }
 
-func (s *UserService) Login(p *request.ShopUserParam) (user *shop.ShopUser, err error) {
+func (s *ShopUserService) Login(p *request.ShopUserParam) (user *shop.ShopUser, err error) {
 	// 检查用户
 	err = global.GA_DB.Where("login_name = ? ", p.UserName).First(&user).Error
 	if err != nil {
@@ -52,7 +52,7 @@ func (s *UserService) Login(p *request.ShopUserParam) (user *shop.ShopUser, err 
 	return user, err
 }
 
-func (u *UserService) GetUserInfo(user_id uint) (user *shop.ShopUser, err error) {
+func (u *ShopUserService) GetUserInfo(user_id uint) (user *shop.ShopUser, err error) {
 	user, err = shop.GetUserDetail(user_id)
 	if err != nil {
 		return nil, err
@@ -60,7 +60,7 @@ func (u *UserService) GetUserInfo(user_id uint) (user *shop.ShopUser, err error)
 	return
 }
 
-func (u *UserService) EditUser(p *request.ShopEditUserParam) error {
+func (u *ShopUserService) EditUser(p *request.ShopEditUserParam) error {
 
 	// 检查用户
 	user := new(shop.ShopUser)

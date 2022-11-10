@@ -1,7 +1,8 @@
 package shop
 
 type ServiceGroup struct {
-	UserService
-	CarouselService
+	ShopUserService
+	ShopCarouselService
 	ShopGoodsService
+	ShopCategoryService
 }

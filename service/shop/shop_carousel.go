@@ -2,9 +2,9 @@ package shop
 
 import "go-admin/model/shop"
 
-type CarouselService struct {
+type ShopCarouselService struct {
 }
 
-func (c *CarouselService) GetCarouselList() (carousel []*shop.ShopCarousel, err error) {
+func (c *ShopCarouselService) GetCarouselList() (carousel []*shop.ShopCarousel, err error) {
 	return shop.GetCarousel()
 }
