@@ -11,7 +11,7 @@ import (
 type ShopCategoryApi struct {
 }
 
-// GetCategoryList 搜索
+// GetCategoryList
 func (category *ShopCategoryApi) GetCategoryList(c *gin.Context) {
 	categoryList, err := categoryService.GetGoodsCategoryList()
 	if err != nil {
