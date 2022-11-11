@@ -16,6 +16,7 @@ func (r *ShopBasicRouter) InitShopBasicRouter(Router *gin.RouterGroup) (R gin.IR
 		Router.POST("index", ShopHomeApi.IndexInfo)    //首页
 		Router.POST("shop-info", ShopHomeApi.ShopInfo) //商城信息
 		Router.POST("login", ShopUserApi.Login)        //登录用户
+		Router.POST("register", ShopUserApi.Register)  //注册用户
 
 	}
 	return Router

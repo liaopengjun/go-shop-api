@@ -13,7 +13,6 @@ func (a *ShopUserRouter) InitShopUserRouter(Router *gin.RouterGroup) (R gin.IRou
 	var ShopUserApi = v1.ApiGroupApp.ShopApiGroup.ShopUserApi
 	{
 		Router.POST("out-login", ShopUserApi.OutLogin)     //退出登录
-		Router.POST("register", ShopUserApi.Register)      //注册用户
 		Router.POST("edit-user", ShopUserApi.EditUserInfo) //编辑用户
 		Router.POST("user-info", ShopUserApi.UserInfo)     //用户详情
 	}

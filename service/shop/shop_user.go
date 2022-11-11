@@ -17,7 +17,7 @@ type ShopUserService struct {
 func (u *ShopUserService) Register(p *request.ShopUserParam) (err error) {
 	// 检查用户是否已注册
 	if !errors.Is(global.GA_DB.Where("login_name = ?", p.UserName).First(&shop.ShopUser{}).Error, gorm.ErrRecordNotFound) {
-		return response.ErrorUserExit
+		return response.ErrorGenIDFailed
 	}
 	if err != nil {
 		return err

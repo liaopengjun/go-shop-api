@@ -126,7 +126,7 @@ func (u *ShopUserApi) Register(c *gin.Context) {
 	err := userService.Register(p)
 	if err != nil {
 		global.GA_SHOPLOG.Error("用户注册失败", zap.Error(err))
-		response.ResponseError(c, config.CodeUserExist)
+		response.ResponseError(c, config.CodeServerBusy)
 		return
 	}
 	response.ResponseSuccess(c, "注册成功")
