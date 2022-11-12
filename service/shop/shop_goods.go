@@ -10,8 +10,8 @@ import (
 type ShopGoodsService struct {
 }
 
-func (g *ShopGoodsService) GetGoodsList(param *request.GoodsParam) (data response.HomeGoodsData, err error) {
-	goodsAll, err := shop.GetGoodsList("home", param)
+func (g *ShopGoodsService) GetGoodsList(param *request.GoodsParam) (data response.HomeGoodsData, total int64, err error) {
+	goodsAll, total, err := shop.GetGoodsList("home", param)
 	//分类处理结果
 	var goodsHotList []response.HomeGoodsDetail
 	var goodsNewList []response.HomeGoodsDetail
@@ -40,4 +40,23 @@ func (g *ShopGoodsService) GetGoodsList(param *request.GoodsParam) (data respons
 	data.HomeNewGoods = goodsNewList
 	data.HomeRecommendGoods = goodsRecommendList
 	return
+}
+
+func (g *ShopGoodsService) GetSearchGoodsList(param *request.GoodsParam) (data []*response.GoodsList, total int64, err error) {
+	goodsAll, total, err := shop.GetGoodsList("", param)
+	for _, v := range goodsAll {
+		res := response.GoodsList{
+			GoodsId:       v.GoodsId,
+			GoodsName:     utils.SubStrLen(v.GoodsName, 30),
+			GoodsIntro:    utils.SubStrLen(v.GoodsIntro, 30),
+			GoodsCoverImg: v.GoodsCoverImg,
+			SellingPrice:  v.SellingPrice,
+		}
+		data = append(data, &res)
+	}
+	return
+}
+
+func (g *ShopGoodsService) GetGoodsDetail(id int) (s shop.ShopGoods, err error) {
+	return shop.GetGoodsDetail(id)
 }

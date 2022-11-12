@@ -26,11 +26,37 @@ type ShopGoods struct {
 	UpdateTime         time.Time `json:"updateTime" form:"updateTime" gorm:"column:update_time;comment:商品修改时间;type:datetime"`
 }
 
-func GetGoodsList(mode string, param *request.GoodsParam) (goods []*ShopGoods, err error) {
+func GetGoodsList(mode string, param *request.GoodsParam) (goods []*ShopGoods, total int64, err error) {
 	db := global.GA_DB.Model(&ShopGoods{})
 	if mode == "home" {
 		db = db.Where(" `goods_type` in ? ", []int{1, 2, 3})
 	}
-	err = db.Find(&goods).Error
+	if param.Keyword != "" {
+		db.Where("goods_name like ? or goods_intro like ?", "%"+param.Keyword+"%", "%"+param.Keyword+"%")
+	}
+	if param.GoodsCategoryId >= 0 {
+		db.Where("goods_category_id= ?", param.GoodsCategoryId)
+	}
+	err = db.Count(&total).Error
+	switch param.OrderBy {
+	case "new":
+		db.Order("goods_id desc")
+	case "price":
+		db.Order("selling_price asc")
+	default:
+		db.Order("stock_num desc")
+	}
+	if mode == "home" {
+		err = db.Find(&goods).Error
+	} else {
+		limit := 10
+		offset := 10 * (param.PageNumber - 1)
+		err = db.Limit(limit).Offset(offset).Find(&goods).Error
+	}
+	return
+}
+
+func GetGoodsDetail(id int) (goods ShopGoods, err error) {
+	err = global.GA_DB.Where("goods_id = ?", id).First(&goods).Error
 	return
 }

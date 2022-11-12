@@ -20,7 +20,7 @@ func (b *ShopHomeApi) IndexInfo(c *gin.Context) {
 		return
 	}
 	var param = new(request.GoodsParam)
-	goodsList, err := goodsService.GetGoodsList(param)
+	goodsList, _, err := goodsService.GetGoodsList(param)
 	if err != nil {
 		global.GA_SHOPLOG.Error(" Home stock fail", zap.Error(err))
 		return
