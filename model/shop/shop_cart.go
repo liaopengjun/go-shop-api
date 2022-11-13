@@ -22,6 +22,17 @@ func GetUserCartList(userId uint) (list []*ShopCartItem, total int, err error) {
 	return
 }
 
+func GetUserCartInfo(userId uint, stockId int64) (cart *ShopCartItem, cartCount int64, err error) {
+	res := global.GA_DB.Where("user_id = ? and is_deleted = 0 and goods_id = ?", userId, stockId).First(&cart)
+	cartCount = res.RowsAffected
+	err = res.Error
+	return
+}
+
 func AddUserCart(cart ShopCartItem) error {
 	return global.GA_DB.Save(&cart).Error
+}
+
+func UpdateCart(cart ShopCartItem) error {
+	return global.GA_DB.Updates(cart).Error
 }

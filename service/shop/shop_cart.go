@@ -20,14 +20,32 @@ func (c *ShopCartService) AddCart(userId uint, goodsId int64, count int) error {
 	if total > 20 {
 		return errors.New(" 购物车数量不超过20件")
 	}
-	//插入数据
-	cartData := shop.ShopCartItem{
-		UserId:     userId,
-		GoodsId:    goodsId,
-		GoodsCount: count,
-		IsDeleted:  0,
-		CreateTime: time.Now(),
-		UpdateTime: time.Now(),
+	// 检查是否商品已经加入购物车
+	cart, itemCount, _ := shop.GetUserCartInfo(userId, goodsId)
+	if itemCount > 0 {
+		cartItemId := cart.CartItemId
+		SumCount := cart.GoodsCount + count
+		cartData := shop.ShopCartItem{
+			CartItemId: cartItemId,
+			GoodsCount: SumCount,
+			UpdateTime: time.Now(),
+		}
+		return shop.UpdateCart(cartData)
+	} else {
+		//插入数据
+		cartData := shop.ShopCartItem{
+			UserId:     userId,
+			GoodsId:    goodsId,
+			GoodsCount: count,
+			IsDeleted:  0,
+			CreateTime: time.Now(),
+			UpdateTime: time.Now(),
+		}
+		return shop.AddUserCart(cartData)
 	}
-	return shop.AddUserCart(cartData)
+
+}
+
+func (c *ShopCartService) GetCartList(userId uint) (list []*shop.ShopCartItem, total int, err error) {
+	return shop.GetUserCartList(userId)
 }
