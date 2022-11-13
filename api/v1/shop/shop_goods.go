@@ -44,7 +44,7 @@ func (goods *ShopGoodsApi) GoodDetail(c *gin.Context) {
 		response.ResponseError(c, config.CodeInvalidParam)
 		return
 	}
-	res, err := goodsService.GetGoodsDetail(p.ID)
+	res, err := goodsService.GetGoodsDetail(int64(p.ID))
 	if err != nil {
 		global.GA_SHOPLOG.Error("get goodsDetail fail:", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)

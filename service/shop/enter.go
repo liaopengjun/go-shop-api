@@ -5,4 +5,5 @@ type ServiceGroup struct {
 	ShopCarouselService
 	ShopGoodsService
 	ShopCategoryService
+	ShopCartService
 }

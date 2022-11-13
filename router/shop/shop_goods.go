@@ -14,8 +14,6 @@ func (s *ShopGoodsRouter) InitShopGoodsRouter(Router *gin.RouterGroup) (R gin.IR
 	{
 		Router.POST("search", ShopGoodsApi.SearchGoodsList)  //搜索商品
 		Router.POST("goods-detail", ShopGoodsApi.GoodDetail) //商品详情
-		Router.POST("add-cart", ShopGoodsApi.AddShopCart)    //加入购物车
-		Router.POST("cart-list", ShopGoodsApi.ShopCartList)  //购物车列表
 	}
 	return Router
 }

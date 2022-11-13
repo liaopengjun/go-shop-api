@@ -56,7 +56,7 @@ func GetGoodsList(mode string, param *request.GoodsParam) (goods []*ShopGoods, t
 	return
 }
 
-func GetGoodsDetail(id int) (goods ShopGoods, err error) {
+func GetGoodsDetail(id int64) (goods ShopGoods, err error) {
 	err = global.GA_DB.Where("goods_id = ?", id).First(&goods).Error
 	return
 }

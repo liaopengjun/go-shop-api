@@ -9,9 +9,11 @@ type ApiShopGroup struct {
 	ShopOrderApi
 	ShopAddressApi
 	ShopCategoryApi
+	ShopCartApi
 }
 
 var userService = service.ServiceGroupApp.ShopServiceGroup.ShopUserService
 var carouselService = service.ServiceGroupApp.ShopServiceGroup.ShopCarouselService
 var goodsService = service.ServiceGroupApp.ShopServiceGroup.ShopGoodsService
 var categoryService = service.ServiceGroupApp.ShopServiceGroup.ShopCategoryService
+var cartService = service.ServiceGroupApp.ShopServiceGroup.ShopCartService

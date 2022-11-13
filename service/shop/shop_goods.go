@@ -57,6 +57,6 @@ func (g *ShopGoodsService) GetSearchGoodsList(param *request.GoodsParam) (data [
 	return
 }
 
-func (g *ShopGoodsService) GetGoodsDetail(id int) (s shop.ShopGoods, err error) {
+func (g *ShopGoodsService) GetGoodsDetail(id int64) (s shop.ShopGoods, err error) {
 	return shop.GetGoodsDetail(id)
 }

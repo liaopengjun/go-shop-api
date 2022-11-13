@@ -33,7 +33,6 @@ func SysadminJwt() func(c *gin.Context) {
 				return
 			}
 		}
-
 		//解析token
 		j := jwt.JWT{SigningKey: []byte(global.GA_CONFIG.JwtConfig.SigningKey)}
 		claims, err := j.ParseToken(token)
