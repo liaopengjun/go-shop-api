@@ -15,10 +15,18 @@ type ShopCartItem struct {
 	UpdateTime time.Time `json:"updateTime" form:"updateTime" gorm:"column:update_time;comment:最新修改时间;type:datetime"`
 }
 
-func GetUserCartList(userId uint) (list []*ShopCartItem, total int, err error) {
-	res := global.GA_DB.Where("user_id =?  and is_deleted = 0", userId).Find(&list)
-	total = int(res.RowsAffected)
-	err = res.Error
+func GetUserCartList(userId uint, pageNumber int) (list []*ShopCartItem, total int, err error) {
+	if pageNumber > 0 {
+		limit := 10
+		offset := 10 * (pageNumber - 1)
+		res := global.GA_DB.Where("user_id =?  and is_deleted = 0", userId).Limit(limit).Offset(offset).Find(&list)
+		total = int(res.RowsAffected)
+		err = res.Error
+	} else {
+		res := global.GA_DB.Where("user_id =?  and is_deleted = 0", userId).Find(&list)
+		total = int(res.RowsAffected)
+		err = res.Error
+	}
 	return
 }
 
@@ -35,4 +43,9 @@ func AddUserCart(cart ShopCartItem) error {
 
 func UpdateCart(cart ShopCartItem) error {
 	return global.GA_DB.Updates(cart).Error
+}
+
+func GetUserCartCount(userId uint) (total int64, err error) {
+	err = global.GA_DB.Model(&ShopCartItem{}).Where("user_id =?  and is_deleted = 0", userId).Count(&total).Error
+	return
 }

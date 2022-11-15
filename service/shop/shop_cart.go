@@ -2,7 +2,9 @@ package shop
 
 import (
 	"errors"
+	"go-admin/global"
 	"go-admin/model/shop"
+	"go-admin/model/shop/response"
 	"time"
 )
 
@@ -16,7 +18,7 @@ func (c *ShopCartService) AddCart(userId uint, goodsId int64, count int) error {
 		return errors.New(" 商品为空")
 	}
 	//购物车数量不超过20件商品
-	_, total, _ := shop.GetUserCartList(userId)
+	_, total, _ := shop.GetUserCartList(userId, 0)
 	if total > 20 {
 		return errors.New(" 购物车数量不超过20件")
 	}
@@ -46,6 +48,37 @@ func (c *ShopCartService) AddCart(userId uint, goodsId int64, count int) error {
 
 }
 
-func (c *ShopCartService) GetCartList(userId uint) (list []*shop.ShopCartItem, total int, err error) {
-	return shop.GetUserCartList(userId)
+func (c *ShopCartService) GetCartList(userId uint, pageNumber int) (cartItemList []*response.CartItemResponse, total int, err error) {
+	var goods_ids []int64
+	var goodsList []shop.ShopGoods
+	var list []*shop.ShopCartItem
+	list, total, err = shop.GetUserCartList(userId, pageNumber)
+	goodsMap := make(map[int64]shop.ShopGoods)
+
+	for _, cartItem := range list {
+		goods_ids = append(goods_ids, cartItem.GoodsId)
+	}
+	global.GA_DB.Where("goods_id in ?", goods_ids).Find(&goodsList)
+	for _, goodsInfo := range goodsList {
+		goodsMap[int64(goodsInfo.GoodsId)] = goodsInfo
+	}
+	for _, cartItem := range list {
+		cartItemRes := response.CartItemResponse{
+			CartItemId: cartItem.CartItemId,
+			GoodsId:    cartItem.GoodsId,
+			GoodsCount: cartItem.GoodsCount,
+		}
+		if _, ok := goodsMap[cartItem.GoodsId]; ok {
+			goodsInfo := goodsMap[cartItem.GoodsId]
+			cartItemRes.GoodsName = goodsInfo.GoodsName
+			cartItemRes.GoodsCoverImg = goodsInfo.GoodsCoverImg
+			cartItemRes.SellingPrice = goodsInfo.SellingPrice
+		}
+		cartItemList = append(cartItemList, &cartItemRes)
+	}
+	return
+}
+
+func (c *ShopCartService) GetCartAmout(userId uint) (total int64, err error) {
+	return shop.GetUserCartCount(userId)
 }

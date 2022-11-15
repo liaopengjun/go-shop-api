@@ -23,7 +23,7 @@ func (cart *ShopCartApi) GetCartList(c *gin.Context) {
 		return
 	}
 	shop_userid, _ := c.Get("shop_userid")
-	list, _, err := shop.GetUserCartList(shop_userid.(uint))
+	list, _, err := cartService.GetCartList(shop_userid.(uint), p.PageNumber)
 	if err != nil {
 		global.GA_SHOPLOG.Error("add cart fail :", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)
@@ -70,4 +70,20 @@ func (cart *ShopCartApi) UpdateShopCart(c *gin.Context) {
 		return
 	}
 	response.ResponseSuccess(c, "修改成功")
+}
+
+func (cart *ShopCartApi) GetCartAmout(c *gin.Context) {
+	shop_userid, _ := c.Get("shop_userid")
+	total, err := cartService.GetCartAmout(shop_userid.(uint))
+	if err != nil {
+		global.GA_SHOPLOG.Error("get userCartCount fail :", zap.Error(err))
+		response.ResponseError(c, config.CodeServerBusy)
+		return
+	}
+	response.ResponseSuccess(c, total)
+}
+
+//Settle 购物车入单明细
+func (cart *ShopCartApi) Settle(c *gin.Context) {
+
 }
