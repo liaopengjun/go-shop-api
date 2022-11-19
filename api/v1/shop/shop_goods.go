@@ -1,7 +1,6 @@
 package shop
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"go-admin/config"
 	"go-admin/global"
@@ -51,14 +50,4 @@ func (goods *ShopGoodsApi) GoodDetail(c *gin.Context) {
 		return
 	}
 	response.ResponseSuccess(c, res)
-}
-
-// AddShopCart 添加购物车
-func (goods *ShopGoodsApi) AddShopCart(g *gin.Context) {
-	fmt.Println("添加购物车")
-}
-
-// ShopCartList 购物车
-func (goods *ShopGoodsApi) ShopCartList(g *gin.Context) {
-	fmt.Println("购物车")
 }

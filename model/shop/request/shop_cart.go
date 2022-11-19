@@ -13,3 +13,7 @@ type ShopEditCartParam struct {
 	CartItemID int `json:"cartItemId" binding:"required"`
 	GoodsCount int `json:"goodsCount" binding:"required"`
 }
+
+type CartItemIDsParam struct {
+	CartItemIds string `json:"cartItemIds"`
+}

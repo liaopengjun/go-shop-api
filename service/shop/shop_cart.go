@@ -82,3 +82,7 @@ func (c *ShopCartService) GetCartList(userId uint, pageNumber int) (cartItemList
 func (c *ShopCartService) GetCartAmout(userId uint) (total int64, err error) {
 	return shop.GetUserCartCount(userId)
 }
+
+func (c *ShopCartService) GetCartItemDetailed(userId uint, cartItemIds []int) (userCartItems []shop.UserCartItems) {
+	return shop.GetCartItemDetailed(userId, cartItemIds)
+}

@@ -8,6 +8,8 @@ import (
 	"go-admin/model/shop"
 	"go-admin/model/shop/request"
 	"go.uber.org/zap"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -85,5 +87,19 @@ func (cart *ShopCartApi) GetCartAmout(c *gin.Context) {
 
 //Settle 购物车入单明细
 func (cart *ShopCartApi) Settle(c *gin.Context) {
-
+	var p = new(request.CartItemIDsParam)
+	if err := c.ShouldBindJSON(p); err != nil {
+		global.GA_SHOPLOG.Error("Settle fail :", zap.Error(err))
+		response.ResponseError(c, config.CodeInvalidParam)
+		return
+	}
+	shop_userid, _ := c.Get("shop_userid")
+	var cartItemIDs []int
+	CartItemStr := strings.Split(p.CartItemIds, ",")
+	for _, cart_item_id := range CartItemStr {
+		int_cart_item_id, _ := strconv.Atoi(cart_item_id)
+		cartItemIDs = append(cartItemIDs, int_cart_item_id)
+	}
+	res := cartService.GetCartItemDetailed(shop_userid.(uint), cartItemIDs)
+	response.ResponseSuccess(c, res)
 }

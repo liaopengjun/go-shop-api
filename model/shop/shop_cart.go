@@ -15,6 +15,15 @@ type ShopCartItem struct {
 	UpdateTime time.Time `json:"updateTime" form:"updateTime" gorm:"column:update_time;comment:最新修改时间;type:datetime"`
 }
 
+type UserCartItems struct {
+	CartItemId    int
+	GoodsId       int64
+	GoodsName     string
+	GoodsCount    int
+	GoodsCoverImg string
+	SellingPrice  int
+}
+
 func GetUserCartList(userId uint, pageNumber int) (list []*ShopCartItem, total int, err error) {
 	if pageNumber > 0 {
 		limit := 10
@@ -47,5 +56,10 @@ func UpdateCart(cart ShopCartItem) error {
 
 func GetUserCartCount(userId uint) (total int64, err error) {
 	err = global.GA_DB.Model(&ShopCartItem{}).Where("user_id =?  and is_deleted = 0", userId).Count(&total).Error
+	return
+}
+
+func GetCartItemDetailed(userId uint, cartItemIds []int) (UserCartItems []UserCartItems) {
+	global.GA_DB.Model(&ShopCartItem{}).Select("shop_cart_items.cart_item_id,shop_cart_items.goods_id,shop_cart_items.goods_count,shop_goods.selling_price,shop_goods.goods_name,shop_goods.goods_cover_img").Joins("left join shop_goods on shop_cart_items.goods_id = shop_goods.goods_id").Where("shop_cart_items.user_id = ? and shop_cart_items.is_deleted =0 and shop_cart_items.cart_item_id in (?) ", userId, cartItemIds).Scan(&UserCartItems)
 	return
 }
