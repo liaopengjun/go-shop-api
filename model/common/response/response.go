@@ -49,3 +49,11 @@ type PageResult struct {
 	Page  int         `json:"page"`
 	Limit int         `json:"limit"`
 }
+
+type ShopPageResult struct {
+	List       interface{} `json:"list"`
+	TotalCount int64       `json:"totalCount"`
+	TotalPage  int         `json:"totalPage"`
+	CurrPage   int         `json:"currPage"`
+	PageSize   int         `json:"pageSize"`
+}

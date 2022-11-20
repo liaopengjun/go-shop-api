@@ -18,7 +18,7 @@ func Router() *gin.Engine {
 	systemRouter := router.RouterGroupApp.System
 	shopRouter := router.RouterGroupApp.Shop
 
-	// Router.Use(middleware.Cors()) //跨域
+	Router.Use(middleware.Cors())                                     //跨域
 	Router.GET("/swagger/*any", gs.WrapHandler(swaggerFiles.Handler)) //api接口文档
 	PrivateGroup := Router.Group("/api")
 	PrivateGroup.StaticFS(global.GA_CONFIG.LocalConfig.Path, http.Dir(global.GA_CONFIG.LocalConfig.Path)) // 为用户头像和文件提供静态地址

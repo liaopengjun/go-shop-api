@@ -3,6 +3,7 @@ package shop
 import (
 	"go-admin/global"
 	"go-admin/model/shop/request"
+	"strconv"
 	"time"
 )
 
@@ -34,8 +35,9 @@ func GetGoodsList(mode string, param *request.GoodsParam) (goods []*ShopGoods, t
 	if param.Keyword != "" {
 		db.Where("goods_name like ? or goods_intro like ?", "%"+param.Keyword+"%", "%"+param.Keyword+"%")
 	}
-	if param.GoodsCategoryId >= 0 {
-		db.Where("goods_category_id= ?", param.GoodsCategoryId)
+	GoodsCategoryId, _ := strconv.Atoi(param.GoodsCategoryId)
+	if GoodsCategoryId >= 0 {
+		db.Where("goods_category_id= ?", GoodsCategoryId)
 	}
 	err = db.Count(&total).Error
 	switch param.OrderBy {

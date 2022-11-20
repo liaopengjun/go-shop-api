@@ -19,6 +19,7 @@ const (
 	CodeAuthApiExit
 	CodeNoPermission
 	CodeFileError
+	CodeLowerShelfError
 )
 
 //定义返回信息
@@ -38,6 +39,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeAuthApiExit:     "api已存在",
 	CodeNoPermission:    "权限不足",
 	CodeFileError:       "文件接受失败",
+	CodeLowerShelfError: "商品已下架",
 }
 
 func (c ResCode) Msg() string {

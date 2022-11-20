@@ -42,7 +42,7 @@ func (g *ShopGoodsService) GetGoodsList(param *request.GoodsParam) (data respons
 	return
 }
 
-func (g *ShopGoodsService) GetSearchGoodsList(param *request.GoodsParam) (data []*response.GoodsList, total int64, err error) {
+func (g *ShopGoodsService) GetSearchGoodsList(param *request.GoodsParam) (data []response.GoodsList, total int64, err error) {
 	goodsAll, total, err := shop.GetGoodsList("", param)
 	for _, v := range goodsAll {
 		res := response.GoodsList{
@@ -52,11 +52,26 @@ func (g *ShopGoodsService) GetSearchGoodsList(param *request.GoodsParam) (data [
 			GoodsCoverImg: v.GoodsCoverImg,
 			SellingPrice:  v.SellingPrice,
 		}
-		data = append(data, &res)
+		data = append(data, res)
 	}
 	return
 }
 
-func (g *ShopGoodsService) GetGoodsDetail(id int64) (s shop.ShopGoods, err error) {
-	return shop.GetGoodsDetail(id)
+func (g *ShopGoodsService) GetGoodsDetail(id int64) (data response.HomeGoodsDetail, err error) {
+	s, err := shop.GetGoodsDetail(id)
+	if s.GoodsSellStatus != 0 {
+		return response.HomeGoodsDetail{}, response.ErrLowerShelfError
+	}
+	data = response.HomeGoodsDetail{
+		GoodsId:            s.GoodsId,
+		GoodsName:          utils.SubStrLen(s.GoodsName, 1000),
+		GoodsIntro:         s.GoodsIntro,
+		GoodsDetailContent: s.GoodsDetailContent,
+		GoodsCoverImg:      s.GoodsCoverImg,
+		SellingPrice:       s.SellingPrice,
+		Tag:                s.Tag,
+	}
+	var list []string
+	data.GoodsCarouselList = append(list, s.GoodsCarousel)
+	return
 }
