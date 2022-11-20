@@ -68,13 +68,11 @@ func (u *ShopUserService) EditUser(p *request.ShopEditUserParam) error {
 	if err != nil {
 		return err
 	}
-
 	//oldPassword := user.PasswordMd5
-	newPassword := utils.MD5V(p.PassWord)
 	//if oldPassword != newPassword {
 	//	return response.ErrorPasswordWrong
 	//}
-
+	newPassword := utils.MD5V(p.PassWord)
 	userdata := &shop.ShopUser{
 		UserId:        user.UserId,
 		LoginName:     p.UserName,

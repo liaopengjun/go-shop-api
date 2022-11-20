@@ -171,7 +171,6 @@ func (u *ShopUserApi) EditUserInfo(c *gin.Context) {
 			response.ResponseError(c, config.CodeInvalidPassword)
 			return
 		}
-
 		response.ResponseError(c, config.CodeServerBusy)
 		return
 	}

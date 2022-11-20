@@ -4,9 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"go-admin/config"
 	"go-admin/global"
+	commonRe "go-admin/model/common/request"
 	"go-admin/model/common/response"
 	"go-admin/model/shop"
 	"go-admin/model/shop/request"
+	commonRes "go-admin/model/shop/response"
 	"go.uber.org/zap"
 	"strconv"
 	"strings"
@@ -26,6 +28,9 @@ func (cart *ShopCartApi) GetCartList(c *gin.Context) {
 	}
 	shop_userid, _ := c.Get("shop_userid")
 	list, _, err := cartService.GetCartList(shop_userid.(uint), p.PageNumber)
+	if len(list) <= 0 {
+		list = []*commonRes.CartItemResponse{}
+	}
 	if err != nil {
 		global.GA_SHOPLOG.Error("add cart fail :", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)
@@ -83,6 +88,22 @@ func (cart *ShopCartApi) GetCartAmout(c *gin.Context) {
 		return
 	}
 	response.ResponseSuccess(c, total)
+}
+
+func (cart *ShopCartApi) DelCart(c *gin.Context) {
+	var p = new(commonRe.GetById)
+	if err := c.ShouldBindJSON(p); err != nil {
+		global.GA_SHOPLOG.Error("del cart param fail :", zap.Error(err))
+		response.ResponseError(c, config.CodeInvalidParam)
+		return
+	}
+	err := shop.DelCart(p.ID)
+	if err != nil {
+		global.GA_SHOPLOG.Error("del cart fail :", zap.Error(err))
+		response.ResponseError(c, config.CodeServerBusy)
+		return
+	}
+	response.ResponseSuccess(c, "删除成功")
 }
 
 //Settle 购物车入单明细

@@ -53,6 +53,9 @@ func AddUserCart(cart ShopCartItem) error {
 func UpdateCart(cart ShopCartItem) error {
 	return global.GA_DB.Updates(cart).Error
 }
+func DelCart(cartItemID int) error {
+	return global.GA_DB.Delete(&ShopCartItem{}, cartItemID).Error
+}
 
 func GetUserCartCount(userId uint) (total int64, err error) {
 	err = global.GA_DB.Model(&ShopCartItem{}).Where("user_id =?  and is_deleted = 0", userId).Count(&total).Error

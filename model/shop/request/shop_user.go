@@ -8,7 +8,7 @@ type ShopUserParam struct {
 
 // ShopEditUserParam 编辑用户
 type ShopEditUserParam struct {
-	UserName      string `json:"user_name" binding:"required"`
-	IntroduceSign string `json:"introduce_sign" binding:"required"`
+	UserName      string `json:"nickName" binding:"required"`
+	IntroduceSign string `json:"introduceSign" binding:"required"`
 	PassWord      string `json:"password"`
 }
