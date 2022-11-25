@@ -9,7 +9,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	enTranslations "github.com/go-playground/validator/v10/translations/en"
 	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
-	"go-admin/global"
+	"go-shop-api/global"
 	"go.uber.org/zap"
 	"reflect"
 	"strings"

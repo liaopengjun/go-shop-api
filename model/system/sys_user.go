@@ -2,7 +2,7 @@ package system
 
 import (
 	"github.com/satori/go.uuid"
-	"go-admin/global"
+	"go-shop-api/global"
 	"gorm.io/gorm"
 )
 

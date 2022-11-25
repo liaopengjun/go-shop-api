@@ -1,10 +1,10 @@
 package shop
 
 import (
-	"go-admin/model/shop"
-	"go-admin/model/shop/request"
-	"go-admin/model/shop/response"
-	"go-admin/utils"
+	"go-shop-api/model/shop"
+	"go-shop-api/model/shop/request"
+	"go-shop-api/model/shop/response"
+	"go-shop-api/utils"
 )
 
 type ShopGoodsService struct {

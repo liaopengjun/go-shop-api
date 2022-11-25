@@ -4,10 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	gs "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
-	_ "go-admin/docs" //导入docs
-	"go-admin/global"
-	"go-admin/middleware"
-	"go-admin/router"
+	_ "go-shop-api/docs" //导入docs
+	"go-shop-api/global"
+	"go-shop-api/middleware"
+	"go-shop-api/router"
 	"net/http"
 )
 

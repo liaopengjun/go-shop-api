@@ -1,8 +1,8 @@
 package service
 
 import (
-	"go-admin/service/shop"
-	"go-admin/service/system"
+	"go-shop-api/service/shop"
+	"go-shop-api/service/system"
 )
 
 type ServiceGroup struct {

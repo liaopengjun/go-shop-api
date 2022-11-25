@@ -3,9 +3,9 @@ package system
 import (
 	"github.com/casbin/casbin/v2"
 	gormadapter "github.com/casbin/gorm-adapter/v3"
-	"go-admin/global"
-	"go-admin/model/system/request"
-	"go-admin/model/system/response"
+	"go-shop-api/global"
+	"go-shop-api/model/system/request"
+	"go-shop-api/model/system/response"
 )
 
 var (

@@ -1,7 +1,7 @@
 package system
 
 import (
-	upload2 "go-admin/utils/upload"
+	upload2 "go-shop-api/utils/upload"
 	"mime/multipart"
 )
 

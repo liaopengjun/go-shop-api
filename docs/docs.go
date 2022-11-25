@@ -33,7 +33,7 @@ var SwaggerInfo = &swag.Spec{
 	BasePath:         "这里写base path",
 	Schemes:          []string{},
 	Title:            "lpjcode",
-	Description:      "go-admin",
+	Description:      "go-shop-api",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

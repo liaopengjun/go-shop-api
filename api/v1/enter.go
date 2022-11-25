@@ -1,8 +1,8 @@
 package v1
 
 import (
-	"go-admin/api/v1/shop"
-	"go-admin/api/v1/system"
+	"go-shop-api/api/v1/shop"
+	"go-shop-api/api/v1/system"
 )
 
 type ApiGroup struct {

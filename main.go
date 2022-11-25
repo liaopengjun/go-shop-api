@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"go-admin/api/v1/system"
-	"go-admin/global"
-	"go-admin/initialize"
+	"go-shop-api/api/v1/system"
+	"go-shop-api/global"
+	"go-shop-api/initialize"
 )
 
 func main() {

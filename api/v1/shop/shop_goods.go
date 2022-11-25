@@ -3,12 +3,12 @@ package shop
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
-	"go-admin/config"
-	"go-admin/global"
-	requestcommon "go-admin/model/common/request"
-	"go-admin/model/common/response"
-	"go-admin/model/shop/request"
-	GoodsRep "go-admin/model/shop/response"
+	"go-shop-api/config"
+	"go-shop-api/global"
+	requestcommon "go-shop-api/model/common/request"
+	"go-shop-api/model/common/response"
+	"go-shop-api/model/shop/request"
+	GoodsRep "go-shop-api/model/shop/response"
 	"go.uber.org/zap"
 )
 

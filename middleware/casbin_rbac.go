@@ -2,10 +2,10 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-admin/config"
-	"go-admin/model/common/response"
-	"go-admin/service"
-	"go-admin/utils"
+	"go-shop-api/config"
+	"go-shop-api/model/common/response"
+	"go-shop-api/service"
+	"go-shop-api/utils"
 )
 
 var casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService

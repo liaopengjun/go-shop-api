@@ -1,8 +1,8 @@
 package shop
 
 import (
-	"go-admin/model/shop"
-	"go-admin/model/shop/request"
+	"go-shop-api/model/shop"
+	"go-shop-api/model/shop/request"
 	"time"
 )
 

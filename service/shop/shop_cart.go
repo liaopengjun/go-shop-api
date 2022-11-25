@@ -2,9 +2,9 @@ package shop
 
 import (
 	"errors"
-	"go-admin/global"
-	"go-admin/model/shop"
-	"go-admin/model/shop/response"
+	"go-shop-api/global"
+	"go-shop-api/model/shop"
+	"go-shop-api/model/shop/response"
 	"time"
 )
 

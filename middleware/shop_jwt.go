@@ -2,11 +2,11 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-admin/config"
-	"go-admin/global"
-	"go-admin/model/common/response"
-	"go-admin/pkg/jwt"
-	commonRedis "go-admin/pkg/redis"
+	"go-shop-api/config"
+	"go-shop-api/global"
+	"go-shop-api/model/common/response"
+	"go-shop-api/pkg/jwt"
+	commonRedis "go-shop-api/pkg/redis"
 	"go.uber.org/zap"
 )
 

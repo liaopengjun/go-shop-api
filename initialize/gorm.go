@@ -2,9 +2,9 @@ package initialize
 
 import (
 	"fmt"
-	"go-admin/config"
-	"go-admin/global"
-	"go-admin/model/system"
+	"go-shop-api/config"
+	"go-shop-api/global"
+	"go-shop-api/model/system"
 	"go.uber.org/zap"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

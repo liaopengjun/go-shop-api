@@ -1,8 +1,8 @@
 package system
 
 import (
-	"go-admin/global"
-	"go-admin/model/system/response"
+	"go-shop-api/global"
+	"go-shop-api/model/system/response"
 )
 
 type SysMenu struct {

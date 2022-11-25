@@ -1,7 +1,7 @@
 package upload
 
 import (
-	"go-admin/global"
+	"go-shop-api/global"
 	"mime/multipart"
 )
 

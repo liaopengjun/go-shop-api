@@ -1,10 +1,10 @@
 package system
 
 import (
-	"go-admin/global"
-	"go-admin/model/system"
-	Request "go-admin/model/system/request"
-	"go-admin/utils"
+	"go-shop-api/global"
+	"go-shop-api/model/system"
+	Request "go-shop-api/model/system/request"
+	"go-shop-api/utils"
 	"strconv"
 	"strings"
 )

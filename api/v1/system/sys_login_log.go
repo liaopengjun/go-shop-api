@@ -3,11 +3,11 @@ package system
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"go-admin/config"
-	"go-admin/global"
-	commonRequest "go-admin/model/common/request"
-	"go-admin/model/common/response"
-	"go-admin/model/system/request"
+	"go-shop-api/config"
+	"go-shop-api/global"
+	commonRequest "go-shop-api/model/common/request"
+	"go-shop-api/model/common/response"
+	"go-shop-api/model/system/request"
 	"go.uber.org/zap"
 )
 

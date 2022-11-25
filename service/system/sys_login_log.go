@@ -3,9 +3,9 @@ package system
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mssola/user_agent"
-	"go-admin/model/system"
-	"go-admin/model/system/request"
-	"go-admin/utils"
+	"go-shop-api/model/system"
+	"go-shop-api/model/system/request"
+	"go-shop-api/utils"
 	"time"
 )
 

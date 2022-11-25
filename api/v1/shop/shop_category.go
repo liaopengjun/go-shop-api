@@ -2,9 +2,9 @@ package shop
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-admin/config"
-	"go-admin/global"
-	"go-admin/model/common/response"
+	"go-shop-api/config"
+	"go-shop-api/global"
+	"go-shop-api/model/common/response"
 	"go.uber.org/zap"
 )
 

@@ -1,7 +1,7 @@
 package shop
 
 import (
-	"go-admin/model/shop"
+	"go-shop-api/model/shop"
 )
 
 type ShopCategoryService struct {

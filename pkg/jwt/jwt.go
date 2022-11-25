@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/dgrijalva/jwt-go"
 	uuid "github.com/satori/go.uuid"
-	"go-admin/global"
+	"go-shop-api/global"
 	"time"
 )
 

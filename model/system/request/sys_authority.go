@@ -1,6 +1,6 @@
 package request
 
-import "go-admin/model/system"
+import "go-shop-api/model/system"
 
 //列表
 type ParamAuthorityList struct {

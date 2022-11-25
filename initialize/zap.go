@@ -3,8 +3,8 @@ package initialize
 import (
 	"fmt"
 	"github.com/natefinch/lumberjack"
-	"go-admin/global"
-	"go-admin/utils"
+	"go-shop-api/global"
+	"go-shop-api/utils"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"os"

@@ -4,11 +4,11 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
-	"go-admin/config"
-	"go-admin/global"
-	"go-admin/model/common/response"
-	Request "go-admin/model/system/request"
-	Response "go-admin/model/system/response"
+	"go-shop-api/config"
+	"go-shop-api/global"
+	"go-shop-api/model/common/response"
+	Request "go-shop-api/model/system/request"
+	Response "go-shop-api/model/system/response"
 	"go.uber.org/zap"
 )
 

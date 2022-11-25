@@ -1,6 +1,6 @@
 package shop
 
-import "go-admin/model/shop"
+import "go-shop-api/model/shop"
 
 type ShopCarouselService struct {
 }

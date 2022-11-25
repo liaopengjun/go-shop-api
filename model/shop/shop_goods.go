@@ -1,8 +1,8 @@
 package shop
 
 import (
-	"go-admin/global"
-	"go-admin/model/shop/request"
+	"go-shop-api/global"
+	"go-shop-api/model/shop/request"
 	"strconv"
 	"time"
 )

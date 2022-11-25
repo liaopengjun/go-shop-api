@@ -2,7 +2,7 @@ package redis
 
 import (
 	"context"
-	"go-admin/global"
+	"go-shop-api/global"
 	"time"
 )
 

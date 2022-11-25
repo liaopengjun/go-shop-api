@@ -3,9 +3,9 @@ package shop
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"go-admin/global"
-	"go-admin/model/common/response"
-	"go-admin/model/shop/request"
+	"go-shop-api/global"
+	"go-shop-api/model/common/response"
+	"go-shop-api/model/shop/request"
 	"go.uber.org/zap"
 )
 

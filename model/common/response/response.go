@@ -2,7 +2,7 @@ package response
 
 import (
 	"github.com/gin-gonic/gin"
-	"go-admin/config"
+	"go-shop-api/config"
 	"net/http"
 )
 

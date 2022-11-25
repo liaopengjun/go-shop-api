@@ -1,6 +1,6 @@
 package shop
 
-import "go-admin/service"
+import "go-shop-api/service"
 
 type ApiShopGroup struct {
 	ShopHomeApi

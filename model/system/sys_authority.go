@@ -1,8 +1,8 @@
 package system
 
 import (
-	"go-admin/global"
-	Response "go-admin/model/system/response"
+	"go-shop-api/global"
+	Response "go-shop-api/model/system/response"
 	"gorm.io/gorm"
 	"time"
 )

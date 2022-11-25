@@ -4,7 +4,7 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
-	"go-admin/config"
+	"go-shop-api/config"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"time"

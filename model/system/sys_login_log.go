@@ -1,7 +1,7 @@
 package system
 
 import (
-	"go-admin/global"
+	"go-shop-api/global"
 	"time"
 )
 

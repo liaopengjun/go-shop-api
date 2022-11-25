@@ -1,4 +1,4 @@
-module go-admin
+module go-shop-api
 
 go 1.16
 

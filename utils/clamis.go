@@ -3,8 +3,8 @@ package utils
 import (
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-	"go-admin/global"
-	"go-admin/pkg/jwt"
+	"go-shop-api/global"
+	"go-shop-api/pkg/jwt"
 )
 
 func GetClaims(c *gin.Context) (*jwt.CustomClaims, error) {

@@ -2,7 +2,7 @@ package utils
 
 import (
 	"fmt"
-	"go-admin/global"
+	"go-shop-api/global"
 	"io/ioutil"
 	"mime/multipart"
 	"os"

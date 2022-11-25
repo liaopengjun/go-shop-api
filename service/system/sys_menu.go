@@ -1,9 +1,9 @@
 package system
 
 import (
-	"go-admin/model/system"
-	"go-admin/model/system/request"
-	"go-admin/model/system/response"
+	"go-shop-api/model/system"
+	"go-shop-api/model/system/request"
+	"go-shop-api/model/system/response"
 )
 
 type MenuService struct {

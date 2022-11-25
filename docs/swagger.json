@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "go-admin",
+        "description": "go-shop-api",
         "title": "lpjcode",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {

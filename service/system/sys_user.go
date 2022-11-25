@@ -4,12 +4,12 @@ import (
 	"context"
 	"fmt"
 	uuid "github.com/satori/go.uuid"
-	"go-admin/global"
-	"go-admin/model/system"
-	"go-admin/model/system/request"
-	"go-admin/model/system/response"
-	"go-admin/utils"
-	upload2 "go-admin/utils/upload"
+	"go-shop-api/global"
+	"go-shop-api/model/system"
+	"go-shop-api/model/system/request"
+	"go-shop-api/model/system/response"
+	"go-shop-api/utils"
+	upload2 "go-shop-api/utils/upload"
 )
 
 type UserService struct {

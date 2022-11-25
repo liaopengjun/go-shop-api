@@ -2,7 +2,7 @@ package shop
 
 import (
 	"github.com/gin-gonic/gin"
-	v1 "go-admin/api/v1"
+	v1 "go-shop-api/api/v1"
 )
 
 type ShopCartRouter struct {

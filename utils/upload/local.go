@@ -2,8 +2,8 @@ package upload
 
 import (
 	"errors"
-	"go-admin/global"
-	"go-admin/utils"
+	"go-shop-api/global"
+	"go-shop-api/utils"
 	"go.uber.org/zap"
 	"io"
 	"mime/multipart"

@@ -1,11 +1,11 @@
 .PHONY: all build run gotool clean help
 
-BINARY="go-admin"
+BINARY="go-shop-api"
 
 all: gotool build
 
 build:
-	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o ./bin/go-admin
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-s -w" -o ./bin/go-shop-api
 
 run:
 	@go run ./main.go ./config.yaml ./config/rbac_model.conf

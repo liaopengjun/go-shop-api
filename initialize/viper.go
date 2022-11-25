@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
-	"go-admin/global"
+	"go-shop-api/global"
 )
 
 // Viper 初始化管理配置

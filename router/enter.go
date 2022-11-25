@@ -1,8 +1,8 @@
 package router
 
 import (
-	"go-admin/router/shop"
-	"go-admin/router/system"
+	"go-shop-api/router/shop"
+	"go-shop-api/router/system"
 )
 
 type RouterGroup struct {

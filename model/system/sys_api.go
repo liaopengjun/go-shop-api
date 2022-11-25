@@ -2,7 +2,7 @@ package system
 
 import (
 	"errors"
-	"go-admin/global"
+	"go-shop-api/global"
 	"gorm.io/gorm"
 )
 
