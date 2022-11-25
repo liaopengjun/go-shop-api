@@ -56,6 +56,11 @@ func (a *ShopUserAddressService) GetUserAddressList(userId uint) (addressList []
 	return
 }
 
+func (a *ShopUserAddressService) GetDefaultAddressInfo(userId uint) (addressInfo *shop.UserAddress, err error) {
+	addressInfo, err = shop.GetUserAddressInfo(userId, 0, 1)
+	return
+}
+
 func (a *ShopUserAddressService) EditUserAddress(userId uint, param *request.EditUserAddressParam) (err error) {
 
 	//设置默认地址

@@ -43,6 +43,18 @@ func (s *ShopUserAddressApi) GetUserAddressList(c *gin.Context) {
 	response.ResponseSuccess(c, list)
 }
 
+// GetDefaultAddressInfo 用户创建订单默认地址
+func (s *ShopUserAddressApi) GetDefaultAddressInfo(c *gin.Context) {
+	userId, _ := c.Get("shop_userid")
+	res, err := userAddress.GetDefaultAddressInfo(userId.(uint))
+	if err != nil {
+		global.GA_LOG.Error("get default userAddress res fail:", zap.Error(err))
+		response.ResponseError(c, config.CodeServerBusy)
+		return
+	}
+	response.ResponseSuccess(c, res)
+}
+
 // DelUserAddress 删除地址
 func (s *ShopUserAddressApi) DelUserAddress(c *gin.Context) {
 	var p = new(requestCom.GetById)
