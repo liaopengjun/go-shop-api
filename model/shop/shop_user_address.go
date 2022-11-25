@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-type UserAddress struct {
+type ShopUserAddress struct {
 	AddressId     int       `json:"addressId" form:"addressId" gorm:"primarykey;AUTO_INCREMENT"`
 	UserId        int       `json:"userId" form:"userId" gorm:"column:user_id;comment:用户主键id;type:bigint"`
 	UserName      string    `json:"userName" form:"userName" gorm:"column:user_name;comment:收货人姓名;type:varchar(30);"`
@@ -20,8 +20,8 @@ type UserAddress struct {
 	UpdateTime    time.Time `json:"updateTime" form:"updateTime" gorm:"column:update_time;comment:修改时间;type:datetime"`
 }
 
-func GetUserAddressInfo(userId uint, address_id int, default_flag int) (u *UserAddress, err error) {
-	db := global.GA_DB.Model(&UserAddress{})
+func GetUserAddressInfo(userId uint, address_id int, default_flag int) (u *ShopUserAddress, err error) {
+	db := global.GA_DB.Model(&ShopUserAddress{})
 	if userId > 0 {
 		db.Where("user_id=? and default_flag =1 and is_deleted = 0", userId)
 	}
@@ -34,12 +34,12 @@ func GetUserAddressInfo(userId uint, address_id int, default_flag int) (u *UserA
 	err = db.First(&u).Error
 	return
 }
-func GetUserAddressList(userId uint) (u []UserAddress, err error) {
+func GetUserAddressList(userId uint) (u []ShopUserAddress, err error) {
 	err = global.GA_DB.Where(" user_id = ? and is_deleted = 0", userId).Find(&u).Error
 	return
 }
 
-func SaveUserAddress(action string, u *UserAddress) error {
+func SaveUserAddress(action string, u *ShopUserAddress) error {
 	if action == "add" {
 		return global.GA_DB.Create(&u).Error
 	} else {
@@ -48,6 +48,6 @@ func SaveUserAddress(action string, u *UserAddress) error {
 }
 
 func DelUserAddress(address_id int) (err error) {
-	err = global.GA_DB.Where("address_id = ?", address_id).Delete(&UserAddress{}).Error
+	err = global.GA_DB.Where("address_id = ?", address_id).Delete(&ShopUserAddress{}).Error
 	return
 }

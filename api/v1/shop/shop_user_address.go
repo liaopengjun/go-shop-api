@@ -22,7 +22,7 @@ func (s *ShopUserAddressApi) AddUserAddress(c *gin.Context) {
 		return
 	}
 	userId, _ := c.Get("shop_userid")
-	err := userAddress.AddUserAddress(userId.(uint), p)
+	err := userAddressService.AddUserAddress(userId.(uint), p)
 	if err != nil {
 		global.GA_LOG.Error("add userAddress res fail:", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)
@@ -34,7 +34,7 @@ func (s *ShopUserAddressApi) AddUserAddress(c *gin.Context) {
 // GetUserAddressList 查询收货地址
 func (s *ShopUserAddressApi) GetUserAddressList(c *gin.Context) {
 	userId, _ := c.Get("shop_userid")
-	list, err := userAddress.GetUserAddressList(userId.(uint))
+	list, err := userAddressService.GetUserAddressList(userId.(uint))
 	if err != nil {
 		global.GA_LOG.Error("add userAddress res fail:", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)
@@ -46,7 +46,7 @@ func (s *ShopUserAddressApi) GetUserAddressList(c *gin.Context) {
 // GetDefaultAddressInfo 用户创建订单默认地址
 func (s *ShopUserAddressApi) GetDefaultAddressInfo(c *gin.Context) {
 	userId, _ := c.Get("shop_userid")
-	res, err := userAddress.GetDefaultAddressInfo(userId.(uint))
+	res, err := userAddressService.GetDefaultAddressInfo(userId.(uint))
 	if err != nil {
 		global.GA_LOG.Error("get default userAddress res fail:", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)
@@ -63,7 +63,7 @@ func (s *ShopUserAddressApi) DelUserAddress(c *gin.Context) {
 		response.ResponseError(c, config.CodeInvalidParam)
 		return
 	}
-	err := userAddress.DelUserAddress(p.ID)
+	err := userAddressService.DelUserAddress(p.ID)
 	if err != nil {
 		global.GA_LOG.Error("del userAddress res fail:", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)
@@ -82,7 +82,7 @@ func (s *ShopUserAddressApi) EditUserAddress(c *gin.Context) {
 		return
 	}
 	userId, _ := c.Get("shop_userid")
-	err := userAddress.EditUserAddress(userId.(uint), p)
+	err := userAddressService.EditUserAddress(userId.(uint), p)
 	if err != nil {
 		global.GA_LOG.Error("del userAddress res fail:", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)
@@ -100,7 +100,7 @@ func (s *ShopUserAddressApi) GetUserAddressInfo(c *gin.Context) {
 		return
 	}
 	userId, _ := c.Get("shop_userid")
-	res, err := userAddress.GetUserAddressInfo(userId.(uint), p.ID)
+	res, err := userAddressService.GetUserAddressInfo(userId.(uint), p.ID)
 	if err != nil {
 		global.GA_LOG.Error("del userAddress res fail:", zap.Error(err))
 		response.ResponseError(c, config.CodeServerBusy)

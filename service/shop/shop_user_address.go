@@ -15,7 +15,7 @@ func (a *ShopUserAddressService) AddUserAddress(userId uint, userAddress *reques
 	if userAddress.DefaultFlag == 1 {
 		addressInfo, _ := shop.GetUserAddressInfo(userId, 0, 1)
 		if addressInfo != nil {
-			u2 := &shop.UserAddress{
+			u2 := &shop.ShopUserAddress{
 				AddressId:   addressInfo.AddressId,
 				DefaultFlag: 0,
 				UpdateTime:  time.Time{},
@@ -26,7 +26,7 @@ func (a *ShopUserAddressService) AddUserAddress(userId uint, userAddress *reques
 			}
 		}
 	}
-	u := &shop.UserAddress{
+	u := &shop.ShopUserAddress{
 		UserId:        int(userId),
 		UserName:      userAddress.UserName,
 		UserPhone:     userAddress.UserPhone,
@@ -46,17 +46,17 @@ func (a *ShopUserAddressService) DelUserAddress(address_id int) (err error) {
 	return shop.DelUserAddress(address_id)
 }
 
-func (a *ShopUserAddressService) GetUserAddressInfo(userId uint, address_id int) (addressInfo *shop.UserAddress, err error) {
+func (a *ShopUserAddressService) GetUserAddressInfo(userId uint, address_id int) (addressInfo *shop.ShopUserAddress, err error) {
 	addressInfo, err = shop.GetUserAddressInfo(userId, address_id, 0)
 	return
 }
 
-func (a *ShopUserAddressService) GetUserAddressList(userId uint) (addressList []shop.UserAddress, err error) {
+func (a *ShopUserAddressService) GetUserAddressList(userId uint) (addressList []shop.ShopUserAddress, err error) {
 	addressList, err = shop.GetUserAddressList(userId)
 	return
 }
 
-func (a *ShopUserAddressService) GetDefaultAddressInfo(userId uint) (addressInfo *shop.UserAddress, err error) {
+func (a *ShopUserAddressService) GetDefaultAddressInfo(userId uint) (addressInfo *shop.ShopUserAddress, err error) {
 	addressInfo, err = shop.GetUserAddressInfo(userId, 0, 1)
 	return
 }
@@ -67,7 +67,7 @@ func (a *ShopUserAddressService) EditUserAddress(userId uint, param *request.Edi
 	if param.DefaultFlag == 1 {
 		addressInfo, _ := shop.GetUserAddressInfo(userId, 0, 1)
 		if addressInfo != nil {
-			u2 := &shop.UserAddress{
+			u2 := &shop.ShopUserAddress{
 				AddressId:   addressInfo.AddressId,
 				DefaultFlag: 0,
 				UpdateTime:  time.Time{},
@@ -79,7 +79,7 @@ func (a *ShopUserAddressService) EditUserAddress(userId uint, param *request.Edi
 		}
 	}
 
-	u := &shop.UserAddress{
+	u := &shop.ShopUserAddress{
 		AddressId:     param.AddressId,
 		UserName:      param.UserName,
 		UserPhone:     param.UserPhone,

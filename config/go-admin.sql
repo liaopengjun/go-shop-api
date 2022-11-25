@@ -1348,3 +1348,19 @@ INSERT INTO `sys_users` VALUES (4, '2022-06-02 22:25:01.031', '2022-06-04 11:49:
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+CREATE TABLE `shop_user_address` (
+    `address_id` int(10) NOT NULL AUTO_INCREMENT,
+    `user_id` bigint(10) NOT NULL DEFAULT '0' COMMENT '用户id',
+    `user_name` varchar(50) NOT NULL DEFAULT '' COMMENT '收货人姓名',
+    `user_phone` varchar(11) DEFAULT NULL COMMENT '收货人手机号',
+    `default_flag` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否为默认 0-非默认 1-是默认',
+    `province_name` varchar(32) NOT NULL DEFAULT '' COMMENT '省',
+    `city_name` varchar(32) NOT NULL DEFAULT '' COMMENT '市',
+    `region_name` varchar(32) NOT NULL DEFAULT '' COMMENT '区',
+    `detail_address` varchar(255) NOT NULL DEFAULT '' COMMENT '收件详细地址',
+    `is_deleted` tinyint(4) NOT NULL DEFAULT '0' COMMENT '删除标识字段(0-未删除 1-已删除)',
+    `create_time` datetime DEFAULT NULL COMMENT '添加时间',
+    `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+    PRIMARY KEY (`address_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
