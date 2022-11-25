@@ -7,4 +7,5 @@ type RouterGroup struct {
 	ShopOrderRouter
 	ShopCategoryRouter
 	ShopCartRouter
+	ShopUserAddressRouter
 }
