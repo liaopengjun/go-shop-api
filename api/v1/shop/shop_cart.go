@@ -122,5 +122,8 @@ func (cart *ShopCartApi) Settle(c *gin.Context) {
 		cartItemIDs = append(cartItemIDs, int_cart_item_id)
 	}
 	res := cartService.GetCartItemDetailed(shop_userid.(uint), cartItemIDs)
+	if len(res) <= 0 {
+		res = []shop.UserCartItems{}
+	}
 	response.ResponseSuccess(c, res)
 }
