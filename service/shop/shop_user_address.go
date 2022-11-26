@@ -36,8 +36,8 @@ func (a *ShopUserAddressService) AddUserAddress(userId uint, userAddress *reques
 		RegionName:    userAddress.RegionName,
 		DetailAddress: userAddress.DetailAddress,
 		IsDeleted:     0,
-		CreateTime:    time.Time{},
-		UpdateTime:    time.Time{},
+		CreateTime:    time.Now(),
+		UpdateTime:    time.Now(),
 	}
 	return shop.SaveUserAddress("add", u)
 }
@@ -78,9 +78,9 @@ func (a *ShopUserAddressService) EditUserAddress(userId uint, param *request.Edi
 			}
 		}
 	}
-
 	u := &shop.ShopUserAddress{
 		AddressId:     param.AddressId,
+		UserId:        int(userId),
 		UserName:      param.UserName,
 		UserPhone:     param.UserPhone,
 		DefaultFlag:   param.DefaultFlag,
@@ -88,8 +88,7 @@ func (a *ShopUserAddressService) EditUserAddress(userId uint, param *request.Edi
 		CityName:      param.CityName,
 		RegionName:    param.RegionName,
 		DetailAddress: param.DetailAddress,
-		IsDeleted:     0,
-		UpdateTime:    time.Time{},
+		UpdateTime:    time.Now(),
 	}
 	return shop.SaveUserAddress("edit", u)
 }

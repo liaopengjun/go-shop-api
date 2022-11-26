@@ -23,7 +23,7 @@ type ShopUserAddress struct {
 func GetUserAddressInfo(userId uint, address_id int, default_flag int) (u *ShopUserAddress, err error) {
 	db := global.GA_DB.Model(&ShopUserAddress{})
 	if userId > 0 {
-		db.Where("user_id=? and default_flag =1 and is_deleted = 0", userId)
+		db.Where("user_id=? and is_deleted = 0", userId)
 	}
 	if address_id > 0 {
 		db.Where("address_id=?", address_id)
