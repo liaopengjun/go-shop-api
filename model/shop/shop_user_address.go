@@ -20,7 +20,7 @@ type ShopUserAddress struct {
 	UpdateTime    time.Time `json:"updateTime" form:"updateTime" gorm:"column:update_time;comment:修改时间;type:datetime"`
 }
 
-func GetUserAddressInfo(userId uint, address_id int, default_flag int) (u *ShopUserAddress, err error) {
+func GetUserAddressInfo(userId uint, address_id int, default_flag int) (u ShopUserAddress, err error) {
 	db := global.GA_DB.Model(&ShopUserAddress{})
 	if userId > 0 {
 		db.Where("user_id=? and is_deleted = 0", userId)
@@ -43,7 +43,7 @@ func SaveUserAddress(action string, u *ShopUserAddress) error {
 	if action == "add" {
 		return global.GA_DB.Create(&u).Error
 	} else {
-		return global.GA_DB.Updates(&u).Error
+		return global.GA_DB.Save(&u).Error
 	}
 }
 

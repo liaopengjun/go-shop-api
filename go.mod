@@ -13,6 +13,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.0
 	github.com/go-playground/validator/v10 v10.10.1
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/jinzhu/copier v0.3.5
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mssola/user_agent v0.5.3
 	github.com/natefinch/lumberjack v2.0.0+incompatible
