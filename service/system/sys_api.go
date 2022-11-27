@@ -73,7 +73,7 @@ func (a *SysApiService) GetSysApiAll() (list interface{}, err error) {
 		if len(keyName) == 0 {
 			keyName = append(keyName, api.ApiGroup)
 		} else {
-			if !utils.IsValueInList(api.ApiGroup, keyName) {
+			if !utils.In_array(api.ApiGroup, keyName) {
 				keyName = append(keyName, api.ApiGroup)
 			}
 		}

@@ -83,6 +83,7 @@ func (c *ShopCartService) GetCartAmout(userId uint) (total int64, err error) {
 	return shop.GetUserCartCount(userId)
 }
 
-func (c *ShopCartService) GetCartItemDetailed(userId uint, cartItemIds []int) (userCartItems []shop.UserCartItems) {
-	return shop.GetCartItemDetailed(userId, cartItemIds)
+func (c *ShopCartService) GetCartItemDetailed(userId uint, cartItemIds []int) (userCartItems []shop.UserCartItems, err error) {
+	userCartItems, err = shop.GetCartItemDetailed(userId, cartItemIds)
+	return
 }

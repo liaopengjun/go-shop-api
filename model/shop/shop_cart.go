@@ -62,7 +62,7 @@ func GetUserCartCount(userId uint) (total int64, err error) {
 	return
 }
 
-func GetCartItemDetailed(userId uint, cartItemIds []int) (UserCartItems []UserCartItems) {
-	global.GA_DB.Model(&ShopCartItem{}).Select("shop_cart_items.cart_item_id,shop_cart_items.goods_id,shop_cart_items.goods_count,shop_goods.selling_price,shop_goods.goods_name,shop_goods.goods_cover_img").Joins("left join shop_goods on shop_cart_items.goods_id = shop_goods.goods_id").Where("shop_cart_items.user_id = ? and shop_cart_items.is_deleted =0 and shop_cart_items.cart_item_id in (?) ", userId, cartItemIds).Scan(&UserCartItems)
+func GetCartItemDetailed(userId uint, cartItemIds []int) (UserCartItems []UserCartItems, err error) {
+	err = global.GA_DB.Model(&ShopCartItem{}).Select("shop_cart_items.cart_item_id,shop_cart_items.goods_id,shop_cart_items.goods_count,shop_goods.selling_price,shop_goods.goods_name,shop_goods.goods_cover_img").Joins("left join shop_goods on shop_cart_items.goods_id = shop_goods.goods_id").Where("shop_cart_items.user_id = ? and shop_cart_items.is_deleted =0 and shop_cart_items.cart_item_id in (?) ", userId, cartItemIds).Scan(&UserCartItems).Error
 	return
 }
