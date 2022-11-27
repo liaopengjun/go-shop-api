@@ -32,8 +32,8 @@ func (o *ShopOrderApi) CreateOrder(c *gin.Context) {
 	userId, _ := c.Get("shop_userid")
 	orderCode, err := orderService.CreateOrder(p, userId.(uint))
 	if err != nil {
-		global.GA_LOG.Error("save order fail:", zap.Error(err))
-		response.ResponseError(c, config.CodeServerBusy)
+		global.GA_LOG.Error("create order fail:", zap.Error(err))
+		response.ResponseError(c, config.CodeCreateOrderError)
 		return
 	}
 	response.ResponseSuccess(c, orderCode)
