@@ -8,6 +8,7 @@ type AppConfig struct {
 	*JwtConfig         `mapstructure:"jwt"`
 	*CasbinConfig      `mapstructure:"casbin"`
 	*LocalConfig       `mapstructure:"local"`
+	*AliPayConfig      `mapstructure:"alipay"`
 }
 
 type ApplicationConfig struct {
@@ -62,4 +63,10 @@ type LocalConfig struct {
 	Path            string `mapstructure:"path"`
 	ImageMaxSize    int    `mapstructure:"image_max_size"`
 	ImageAllowExits string `mapstructure:"image_allow_exits"`
+}
+
+type AliPayConfig struct {
+	AppId      string `mapstructure:"appid"`
+	PrivateKey string `mapstructure:"private-key"`
+	PublicKey  string `mapstructure:"public-key"`
 }
