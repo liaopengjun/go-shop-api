@@ -17,7 +17,7 @@ mysql:
   host: 127.0.0.1
   port: 3306
   user: root
-  password: root@lpj123.
+  password: root
   db: go-shop-api
   max_open_conns: 100
   max_idle_conns: 20
@@ -38,5 +38,9 @@ local:
   path: uploads/file
   image_max_size : 5
   image_allow_exits : .jpg,.jpeg,.png
+aliPay:
+  appid:
+  private-key:
+  public-key:
 
 
