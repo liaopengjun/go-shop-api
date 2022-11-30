@@ -25,7 +25,7 @@ func Gorm() *gorm.DB {
 	if db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true,
 	}); err != nil {
-		return nil
+		panic(fmt.Errorf("mysql connection failed: %s \n", err))
 	} else {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(config.MaxIdleConns) // SetMaxIdleConns 设置空闲连接池中连接的最大数量

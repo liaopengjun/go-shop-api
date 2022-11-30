@@ -16,6 +16,7 @@ type ApplicationConfig struct {
 	Port       int    `mapstructure:"port"`
 	UploadType string `mapstructure:"upload_type"`
 	UserRedis  bool   `mapstructure:"user_redis"`
+	UserPay    bool   `mapstructure:"user_pay"`
 }
 
 type MySQLConfig struct {

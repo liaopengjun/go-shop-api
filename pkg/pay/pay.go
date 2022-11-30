@@ -2,7 +2,7 @@ package pay
 
 // Payer 包含支付方法的接口类型
 type Payer interface {
-	Pay(payType string, data interface{}) (interface{}, error)
+	Pay(payType string, data map[string]interface{}) (map[string]interface{}, error)
 }
 
 // NewPay 初始化支付
