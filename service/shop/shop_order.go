@@ -7,6 +7,7 @@ import (
 	"go-shop-api/model/shop"
 	"go-shop-api/model/shop/request"
 	"go-shop-api/model/shop/response"
+	"go-shop-api/pkg/pay"
 	"go-shop-api/utils"
 	"gorm.io/gorm"
 	"strconv"
@@ -126,6 +127,21 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 		return orderCode, response.ErrCreateOrder
 	}
 	return orderCode, err
+}
+
+func (o *ShopOrderService) OrderPay2(p *request.OrderPayParam) (result map[string]interface{}, err error) {
+	//检查订单有效状态
+	orderInfo, err := shop.GetOrderInfo(p.OrderNo)
+	if err != nil || orderInfo == nil {
+		return nil, errors.New("订单信息有误")
+	}
+	var payParam map[string]interface{}
+	payParam["subject"] = "订单沙箱环境"
+	payParam["out_trade_no"] = orderInfo.OrderNo
+	payParam["total_amount"] = orderInfo.TotalPrice
+	payParam["notify_url"] = "111"
+	payService := pay.NewPay(p.PayType)
+	return payService.Pay("WapPay", payParam)
 }
 
 func (o *ShopOrderService) OrderPay(p *request.OrderPayParam) (err error) {

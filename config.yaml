@@ -3,7 +3,7 @@ application:
   port: 8189
   upload_type: local
   user_redis: true
-  user_pay: true
+  user_pay: false
 log:
   level: info
   format: console

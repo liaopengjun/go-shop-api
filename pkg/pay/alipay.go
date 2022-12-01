@@ -14,7 +14,7 @@ type AliPay struct {
 
 func (ali *AliPay) Pay(payType string, PayData map[string]interface{}) (payResult map[string]interface{}, err error) {
 	switch payType {
-	case "TradeWapPay":
+	case "WapPay":
 		payResult, err = TradeWapPay(PayData)
 	}
 	return
@@ -27,18 +27,18 @@ func TradeWapPay(PayData map[string]interface{}) (payResult map[string]interface
 	if err != nil {
 		return nil, err
 	}
+
 	//配置公共参数
-	client.SetCharset("utf-8").
-		SetSignType(alipay.RSA2).
-		//SetReturnUrl("https://www.fmm.ink").
-		SetNotifyUrl("https://www.fmm.ink")
+	client.SetCharset("utf-8").SetSignType(alipay.RSA2).SetNotifyUrl(PayData["notify_url"].(string))
+
 	//请求参数
 	bm := make(gopay.BodyMap)
-	bm.Set("subject", "沙箱环境")
+	bm.Set("subject", PayData["subject"])
 	bm.Set("out_trade_no", PayData["order_code"])
-	bm.Set("quit_url", "https://www.fmm.ink")
-	bm.Set("total_amount", "100.00")
+	//bm.Set("quit_url", "https://www.fmm.ink")
+	bm.Set("total_amount", PayData["total_amount"])
 	bm.Set("product_code", "QUICK_WAP_WAY")
+
 	// 发送支付请求
 	payUrl, err := client.TradeWapPay(ctx, bm)
 	if err != nil {

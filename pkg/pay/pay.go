@@ -8,9 +8,9 @@ type Payer interface {
 // NewPay 初始化支付
 func NewPay(pay_operator string) Payer {
 	switch pay_operator {
-	case "ali_pay":
+	case "1":
 		return &AliPay{}
-	case "wx_pay":
+	case "2":
 		return &WechatPay{}
 	default:
 		return &AliPay{}

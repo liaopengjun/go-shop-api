@@ -30,7 +30,7 @@ func (b *ShopHomeApi) IndexInfo(c *gin.Context) {
 	indexResult["hotGoodses"] = goodsList.HomeHotGoods
 	indexResult["newGoodses"] = goodsList.HomeNewGoods
 	indexResult["recommendGoodses"] = goodsList.HomeRecommendGoods
-	response.ResponseSuccess(c, indexResult)
+	response.ResponseSuccess(c, goodsList)
 }
 
 // ShopInfo 商信息

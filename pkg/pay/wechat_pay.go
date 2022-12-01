@@ -3,6 +3,10 @@ package pay
 type WechatPay struct {
 }
 
-func (wx *WechatPay) Pay(payType string, PayData map[string]interface{}) (PayResult map[string]interface{}, err error) {
+func (ali *WechatPay) Pay(payType string, PayData map[string]interface{}) (payResult map[string]interface{}, err error) {
+	switch payType {
+	case "WapPay":
+		return nil, nil
+	}
 	return
 }

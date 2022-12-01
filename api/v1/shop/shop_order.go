@@ -54,14 +54,26 @@ func (o *ShopOrderApi) OrderPay(c *gin.Context) {
 		response.ResponseErrorWithMsg(c, config.CodeInvalidParam, utils.RemoveTopStructNew(errs.Translate(global.GA_TRANS)))
 		return
 	}
-	err := orderService.OrderPay(p)
-	if err != nil {
-		global.GA_LOG.Error("pay order fail:", zap.Error(err))
-		response.ResponseError(c, config.CodePayOrderError)
-		return
-	}
-	response.ResponseSuccess(c, "支付成功")
+	if global.GA_CONFIG.UserPay {
+		var responeData string
+		res, err := orderService.OrderPay2(p)
+		if err != nil {
+			global.GA_LOG.Error("pay order fail:", zap.Error(err))
+			response.ResponseError(c, config.CodePayOrderError)
+			return
+		}
+		responeData = res["payUrl"].(string)
+		response.ResponseSuccess(c, responeData)
+	} else {
+		err := orderService.OrderPay(p)
+		if err != nil {
+			global.GA_LOG.Error("pay order fail:", zap.Error(err))
+			response.ResponseError(c, config.CodePayOrderError)
+			return
+		}
+		response.ResponseSuccess(c, "支付成功")
 
+	}
 }
 
 // OrderList 订单列表
