@@ -16,6 +16,7 @@ func (s *ShopOrderRouter) InitShopOrderRouter(Router *gin.RouterGroup) (R gin.IR
 		Router.POST("cancel-order", ShopOrderApi.CancelOrder)      //取消订单
 		Router.POST("order-pay", ShopOrderApi.OrderPay)            //订单支付
 		Router.POST("order-list", ShopOrderApi.OrderList)          //订单列表
+		Router.POST("order-detail", ShopOrderApi.GetOrderDetail)   //订单详情
 		Router.POST("confirm-order", ShopOrderApi.ConfirmTheGoods) //确认收货
 	}
 	return Router

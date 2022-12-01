@@ -1,12 +1,15 @@
 package shop
 
 import (
+	"errors"
 	"go-shop-api/global"
+	"go-shop-api/model/common/enum"
 	"go-shop-api/model/shop"
 	"go-shop-api/model/shop/request"
 	"go-shop-api/model/shop/response"
 	"go-shop-api/utils"
 	"gorm.io/gorm"
+	"strconv"
 	"time"
 )
 
@@ -123,4 +126,139 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 		return orderCode, response.ErrCreateOrder
 	}
 	return orderCode, err
+}
+
+func (o *ShopOrderService) OrderPay(p *request.OrderPayParam) (err error) {
+	//检查订单有效状态
+	orderInfo, err := shop.GetOrderInfo(p.OrderNo)
+	if err != nil || orderInfo == nil {
+		return errors.New("订单信息有误")
+	}
+
+	PayType, _ := strconv.Atoi(p.PayType)
+	now := time.Now()
+	orderData := &shop.ShopOrder{
+		OrderId:     orderInfo.OrderId,
+		OrderNo:     p.OrderNo,
+		PayStatus:   1,
+		PayType:     PayType,
+		PayTime:     &now,
+		OrderStatus: 1,
+		UpdateTime:  time.Now(),
+	}
+	err = shop.SaveOrder(orderData)
+	return
+}
+
+func (o *ShopOrderService) GetOrderList(p *request.OrderListParam, userId uint) (orderList []response.OrderResponse, total int64, err error) {
+	orderRes, total, err := shop.GetOrderList(userId, p.PageNumber, p.Status)
+	if total > 0 {
+
+		//订单id
+		var orderIds []int
+		for _, orderInfo := range orderRes {
+			orderIds = append(orderIds, orderInfo.OrderId)
+		}
+
+		//获取订单的商品信息
+		itemList, _ := shop.GetOrderItemList(orderIds)
+		var orderItemMap map[int][]response.OrderItemResponse
+		for _, orderItemInfo := range itemList {
+			itemData := response.OrderItemResponse{
+				GoodsId:       orderItemInfo.GoodsId,
+				GoodsName:     orderItemInfo.GoodsName,
+				GoodsCount:    orderItemInfo.GoodsCount,
+				GoodsCoverImg: orderItemInfo.GoodsCoverImg,
+				SellingPrice:  orderItemInfo.SellingPrice,
+			}
+			orderItemMap[orderItemInfo.OrderId] = append(orderItemMap[orderItemInfo.OrderId], itemData)
+		}
+
+		//组合订单信息
+		for _, orderInfo := range orderRes {
+			orderItemSli := orderItemMap[orderInfo.OrderId]
+			_, statusTxt := enum.GetNewBeeMallOrderStatusEnumByStatus(orderInfo.OrderStatus)
+			orderData := response.OrderResponse{
+				OrderId:           orderInfo.OrderId,
+				OrderNo:           orderInfo.OrderNo,
+				TotalPrice:        orderInfo.TotalPrice,
+				PayType:           orderInfo.PayType,
+				OrderStatus:       orderInfo.OrderStatus,
+				OrderStatusString: statusTxt,
+				CreateTime:        orderInfo.CreateTime,
+				OrderItemResponse: orderItemSli,
+			}
+			orderList = append(orderList, orderData)
+		}
+
+	}
+	return orderList, total, err
+}
+
+func (o *ShopOrderService) GetOrderDetail(orderNo string) (orderRes response.OrderDetailResponse, err error) {
+
+	orderInfo, err := shop.GetOrderInfo(orderNo)
+	if err != nil || orderInfo == nil {
+		return orderRes, errors.New("订单信息有误")
+	}
+
+	itemList, err := shop.GetOrderItemList([]int{orderInfo.OrderId})
+	if err != nil || itemList == nil {
+		return orderRes, errors.New("订单信息有误")
+	}
+
+	//组合订单信息
+	_, statusTxt := enum.GetNewBeeMallOrderStatusEnumByStatus(orderInfo.OrderStatus)
+	_, PayTypeString := enum.GetNewBeeMallOrderPayTypeEnumByStatus(orderInfo.PayType)
+	orderRes = response.OrderDetailResponse{
+		OrderNo:           orderInfo.OrderNo,
+		TotalPrice:        orderInfo.TotalPrice,
+		PayStatus:         orderInfo.PayStatus,
+		PayType:           orderInfo.PayType,
+		PayTypeString:     PayTypeString,
+		PayTime:           *orderInfo.PayTime,
+		OrderStatus:       orderInfo.OrderStatus,
+		OrderStatusString: statusTxt,
+		CreateTime:        orderInfo.CreateTime,
+	}
+	var orderItemSli []response.OrderItemResponse
+	for _, orderItemInfo := range itemList {
+		orderItemData := response.OrderItemResponse{
+			GoodsId:       orderItemInfo.GoodsId,
+			GoodsName:     orderItemInfo.GoodsName,
+			GoodsCount:    orderItemInfo.GoodsCount,
+			GoodsCoverImg: orderItemInfo.GoodsCoverImg,
+			SellingPrice:  orderItemInfo.SellingPrice,
+		}
+		orderItemSli = append(orderItemSli, orderItemData)
+	}
+	orderRes.OrderItemResponse = orderItemSli
+	return
+}
+
+func (o *ShopOrderService) CancelOrder(orderNo string) error {
+	//检查订单有效状态
+	orderInfo, err := shop.GetOrderInfo(orderNo)
+	if err != nil || orderInfo == nil {
+		return errors.New("订单信息有误")
+	}
+	orderData := &shop.ShopOrder{
+		OrderId:     orderInfo.OrderId,
+		OrderStatus: -1, //手动关闭
+		UpdateTime:  time.Now(),
+	}
+	return shop.SaveOrder(orderData)
+}
+func (o *ShopOrderService) ConfirmTheGoods(orderNo string) error {
+	//检查订单有效状态
+	orderInfo, err := shop.GetOrderInfo(orderNo)
+	if err != nil || orderInfo == nil {
+		return errors.New("订单信息有误")
+	}
+	orderData := &shop.ShopOrder{
+		OrderId:     orderInfo.OrderId,
+		OrderStatus: 4, //手动关闭
+		UpdateTime:  time.Now(),
+	}
+	return shop.SaveOrder(orderData)
 }

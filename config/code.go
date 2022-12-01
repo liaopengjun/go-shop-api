@@ -21,6 +21,7 @@ const (
 	CodeFileError
 	CodeLowerShelfError
 	CodeCreateOrderError
+	CodePayOrderError
 )
 
 //定义返回信息
@@ -42,6 +43,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeFileError:        "文件接受失败",
 	CodeLowerShelfError:  "商品已下架",
 	CodeCreateOrderError: "创建订单失败",
+	CodePayOrderError:    "支付订单失败",
 }
 
 func (c ResCode) Msg() string {

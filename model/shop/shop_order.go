@@ -1,6 +1,9 @@
 package shop
 
-import "time"
+import (
+	"go-shop-api/global"
+	"time"
+)
 
 type ShopOrder struct {
 	OrderId     int        `json:"orderId" form:"orderId" gorm:"primarykey;AUTO_INCREMENT"`
@@ -29,4 +32,29 @@ type ShopOrderItem struct {
 	SellingPrice  int       `json:"sellingPrice" form:"sellingPrice" gorm:"column:selling_price;comment:商品实际售价;type:int"`
 	GoodsCount    int       `json:"goodsCount" form:"goodsCount" gorm:"column:goods_count;;type:bigint"`
 	CreateTime    time.Time `json:"createTime" form:"createTime" gorm:"column:create_time;comment:创建时间;type:datetime"`
+}
+
+func GetOrderList(userId uint, pageNumber, status int) (orderList []*ShopOrder, total int64, err error) {
+	db := global.GA_DB.Model(&ShopOrder{})
+	if status != 0 {
+		db.Where("status = ?", status)
+	}
+	err = db.Where("user_id =? and is_deleted=0 ", userId).Count(&total).Error
+	limit := 5
+	offset := limit * (pageNumber - 1)
+	err = db.Limit(limit).Offset(offset).Find(&orderList).Error
+	return
+}
+
+func GetOrderItemList(orderId []int) (item []*ShopOrderItem, err error) {
+	err = global.GA_DB.Where("order_id in ", orderId).Find(&item).Error
+	return
+}
+func SaveOrder(order *ShopOrder) error {
+	return global.GA_DB.Updates(&order).Error
+}
+
+func GetOrderInfo(orderCode string) (order *ShopOrder, err error) {
+	err = global.GA_DB.Where("order_no = ? and is_deleted=0 ", orderCode).First(&order).Error
+	return
 }
