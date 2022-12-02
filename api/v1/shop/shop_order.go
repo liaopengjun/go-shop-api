@@ -97,6 +97,7 @@ func (o *ShopOrderApi) OrderList(c *gin.Context) {
 	}
 	var PageSize int64 = 5
 	totalPage := total / PageSize
+
 	response.ResponseSuccess(c, response.ShopPageResult{
 		List:       list,
 		TotalCount: total,
