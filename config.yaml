@@ -18,7 +18,7 @@ mysql:
   host: 127.0.0.1
   port: 3306
   user: root
-  password: root   #root@lpj123.
+  password: root@lpj123.   #root@lpj123.
   db: go-shop-api
   max_open_conns: 100
   max_idle_conns: 20

@@ -11,8 +11,8 @@ type OrderPayParam struct {
 }
 
 type OrderListParam struct {
-	PageNumber int `json:"pageNumber"`
-	Status     int `json:"status"`
+	PageNumber int    `json:"pageNumber"`
+	Status     string `json:"status"`
 }
 
 type OrderDetailParam struct {

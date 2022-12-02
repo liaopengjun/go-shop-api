@@ -158,7 +158,7 @@ func (o *ShopOrderService) OrderPay(p *request.OrderPayParam) (err error) {
 		OrderNo:     p.OrderNo,
 		PayStatus:   1,
 		PayType:     PayType,
-		PayTime:     &now,
+		PayTime:     now,
 		OrderStatus: 1,
 		UpdateTime:  time.Now(),
 	}
@@ -178,7 +178,7 @@ func (o *ShopOrderService) GetOrderList(p *request.OrderListParam, userId uint) 
 
 		//获取订单的商品信息
 		itemList, _ := shop.GetOrderItemList(orderIds)
-		var orderItemMap map[int][]response.OrderItemResponse
+		var orderItemMap = make(map[int][]response.OrderItemResponse)
 		for _, orderItemInfo := range itemList {
 			itemData := response.OrderItemResponse{
 				GoodsId:       orderItemInfo.GoodsId,
@@ -226,13 +226,14 @@ func (o *ShopOrderService) GetOrderDetail(orderNo string) (orderRes response.Ord
 	//组合订单信息
 	_, statusTxt := enum.GetNewBeeMallOrderStatusEnumByStatus(orderInfo.OrderStatus)
 	_, PayTypeString := enum.GetNewBeeMallOrderPayTypeEnumByStatus(orderInfo.PayType)
+
 	orderRes = response.OrderDetailResponse{
 		OrderNo:           orderInfo.OrderNo,
 		TotalPrice:        orderInfo.TotalPrice,
 		PayStatus:         orderInfo.PayStatus,
 		PayType:           orderInfo.PayType,
 		PayTypeString:     PayTypeString,
-		PayTime:           *orderInfo.PayTime,
+		PayTime:           orderInfo.PayTime,
 		OrderStatus:       orderInfo.OrderStatus,
 		OrderStatusString: statusTxt,
 		CreateTime:        orderInfo.CreateTime,
