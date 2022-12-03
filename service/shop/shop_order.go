@@ -2,12 +2,14 @@ package shop
 
 import (
 	"errors"
+	"fmt"
 	"go-shop-api/global"
 	"go-shop-api/model/common/enum"
 	"go-shop-api/model/shop"
 	"go-shop-api/model/shop/request"
 	"go-shop-api/model/shop/response"
 	"go-shop-api/pkg/pay"
+	"go-shop-api/pkg/redis"
 	"go-shop-api/utils"
 	"gorm.io/gorm"
 	"strconv"
@@ -80,13 +82,16 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 	userDefaultAddress, _ := shop.GetUserAddressInfo(userId, p.AddressId, 0)
 	orderCode = utils.GenOrderNo()
 
-	err = global.GA_DB.Debug().Transaction(func(tx *gorm.DB) error {
+	err = global.GA_DB.Transaction(func(tx *gorm.DB) error {
 		//事务开始
 		//5.删除购物车数据
 		TxErr := tx.Where("cart_item_id in ?", itemIdList).Updates(shop.ShopCartItem{IsDeleted: 1}).Error
 		if TxErr != nil {
 			return TxErr
 		}
+		closerTime := time.Now().Unix() + global.GA_CONFIG.OrderCloserTime
+		timeStr := time.Unix(closerTime, 0).Format("2006-01-02 15:04:05")
+		t, _ := time.ParseInLocation("2006-01-02 15:04:05", timeStr, time.Local)
 		//创建订单
 		orderData := shop.ShopOrder{
 			OrderNo:     orderCode,
@@ -98,6 +103,7 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 			UserAddress: userDefaultAddress.DetailAddress,
 			CreateTime:  time.Now(),
 			UpdateTime:  time.Now(),
+			OverdueTime: t,
 		}
 		if TxErr = tx.Save(&orderData).Error; TxErr != nil {
 			return TxErr
@@ -123,9 +129,15 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 		//事务结束
 		return nil
 	})
+
+	//写入redis
+	key := "o" + orderCode
+	err2 := redis.SetOrderCloserTime(key, orderCode)
+	fmt.Println(err2)
 	if err != nil {
 		return orderCode, response.ErrCreateOrder
 	}
+
 	return orderCode, err
 }
 

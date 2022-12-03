@@ -14,6 +14,7 @@ import (
 func ShopJwt() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		token := c.Request.Header.Get("token")
+
 		//token是否为空
 		if token == "" {
 			response.ResponseError(c, config.CodeNeedLogin) //需要登录

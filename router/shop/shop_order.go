@@ -18,6 +18,7 @@ func (s *ShopOrderRouter) InitShopOrderRouter(Router *gin.RouterGroup) (R gin.IR
 		Router.POST("order-list", ShopOrderApi.OrderList)          //订单列表
 		Router.POST("order-detail", ShopOrderApi.GetOrderDetail)   //订单详情
 		Router.POST("confirm-order", ShopOrderApi.ConfirmTheGoods) //确认收货
+
 	}
 	return Router
 

@@ -21,6 +21,7 @@ type ShopOrder struct {
 	IsDeleted   int       `json:"isDeleted" form:"isDeleted" gorm:"column:is_deleted;comment:删除标识字段(0-未删除 1-已删除);type:tinyint"`
 	CreateTime  time.Time `json:"createTime" form:"createTime" gorm:"column:create_time;comment:创建时间;type:datetime"`
 	UpdateTime  time.Time `json:"updateTime" form:"updateTime" gorm:"column:update_time;comment:最新修改时间;type:datetime"`
+	OverdueTime time.Time `json:"OverdueTime" form:"OverdueTime" gorm:"column:overdue_time;comment:过期时间;type:datetime"`
 }
 
 type ShopOrderItem struct {

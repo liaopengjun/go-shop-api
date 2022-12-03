@@ -30,11 +30,12 @@ type MySQLConfig struct {
 }
 
 type RedisConfig struct {
-	Host     string `mapstructure:"host"`
-	Password string `mapstructure:"password"`
-	Port     int    `mapstructure:"port"`
-	DB       int    `mapstructure:"db"`
-	PoolSize int    `mapstructure:"pool_size"`
+	Host            string `mapstructure:"host"`
+	Password        string `mapstructure:"password"`
+	Port            int    `mapstructure:"port"`
+	DB              int    `mapstructure:"db"`
+	PoolSize        int    `mapstructure:"pool_size"`
+	OrderCloserTime int64  `mapstructure:"order-closer-time"`
 }
 
 type LogConfig struct {

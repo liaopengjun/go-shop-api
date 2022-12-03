@@ -7,10 +7,15 @@ import (
 	"go-shop-api/global"
 )
 
+var pathConfig = "config.yaml"
+
 // Viper 初始化管理配置
-func Viper() *viper.Viper {
+func Viper(path string) *viper.Viper {
+	if len(path) > 0 {
+		pathConfig = path
+	}
 	v := viper.New()
-	v.SetConfigFile("config.yaml")
+	v.SetConfigFile(pathConfig)
 	v.SetConfigType("yaml")
 	err := v.ReadInConfig()
 	if err != nil {

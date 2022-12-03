@@ -28,6 +28,7 @@ redis:
   pool_size: 100
   port: 6379
   db: 0
+  order-closer-time: 60
 jwt:
   buffer-time: 86400
   expires-time: 86400

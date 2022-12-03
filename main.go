@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	global.GA_VP = initialize.Viper()                                   // 初始化Viper
+	global.GA_VP = initialize.Viper("")                                 // 初始化Viper
 	global.GA_LOG = initialize.Zap(global.GA_CONFIG.LogConfig.Director) // 初始化zap日志库
 	global.GA_SHOPLOG = initialize.Zap(global.GA_CONFIG.LogConfig.ShopDirector)
 	global.GA_DB = initialize.Gorm() // 初始化数据库

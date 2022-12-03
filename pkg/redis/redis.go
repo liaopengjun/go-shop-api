@@ -38,3 +38,9 @@ func SetUserToken(key string, token string) (err error) {
 func DelUserToken(userName string) (err error) {
 	return global.GA_REDIS.Del(ctx, userName).Err()
 }
+
+// SetOrderCloserTime 设置订单过期时间
+func SetOrderCloserTime(key, orderNo string) (err error) {
+	timer := time.Duration(global.GA_CONFIG.OrderCloserTime) * time.Second
+	return global.GA_REDIS.SetEX(ctx, key, orderNo, timer).Err()
+}
