@@ -32,7 +32,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeUserNotExist:     "用户不存在",
 	CodeInvalidPassword:  "用户名或密码错误",
 	CodeServerBusy:       "服务繁忙",
-	CodeInvalidToken:     "无效Token",
+	CodeInvalidToken:     "登陆信息已过期",
 	CodeNeedLogin:        "需要登录",
 	CodeMenuExist:        "菜单已存在",
 	CodeMenuChildExist:   "菜单存在下级",
