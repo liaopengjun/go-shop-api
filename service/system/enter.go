@@ -8,4 +8,5 @@ type ServiceGroup struct {
 	CasbinService
 	UploadService
 	LoginLogService
+	JobService
 }

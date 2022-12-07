@@ -2,7 +2,6 @@ package shop
 
 import (
 	"errors"
-	"fmt"
 	"go-shop-api/global"
 	"go-shop-api/model/common/enum"
 	"go-shop-api/model/shop"
@@ -89,9 +88,11 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 		if TxErr != nil {
 			return TxErr
 		}
+
 		closerTime := time.Now().Unix() + global.GA_CONFIG.OrderCloserTime
 		timeStr := time.Unix(closerTime, 0).Format("2006-01-02 15:04:05")
 		t, _ := time.ParseInLocation("2006-01-02 15:04:05", timeStr, time.Local)
+
 		//创建订单
 		orderData := shop.ShopOrder{
 			OrderNo:     orderCode,
@@ -129,11 +130,9 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 		//事务结束
 		return nil
 	})
-
 	//写入redis
-	key := "o" + orderCode
-	err2 := redis.SetOrderCloserTime(key, orderCode)
-	fmt.Println(err2)
+	key := "shop:order:closer:" + orderCode
+	err = redis.SetOrderCloserTime(key, orderCode)
 	if err != nil {
 		return orderCode, response.ErrCreateOrder
 	}

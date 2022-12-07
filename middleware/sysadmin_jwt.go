@@ -43,8 +43,7 @@ func SysadminJwt() func(c *gin.Context) {
 			return
 		}
 
-		//global.GA_LOG.Info("token到期时间", zap.Any("ExpiresAt", claims.ExpiresAt))
-		c.Set("userid", claims.UUID) //跨中间件设置值
-		c.Next()                     //继续处理后续函数
+		c.Set("userid", claims.ID) //跨中间件设置值
+		c.Next()                   //继续处理后续函数
 	}
 }

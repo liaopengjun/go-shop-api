@@ -19,3 +19,4 @@ var sysApiService = service.ServiceGroupApp.SystemServiceGroup.SysApiService
 var casbinService = service.ServiceGroupApp.SystemServiceGroup.CasbinService
 var uploadService = service.ServiceGroupApp.SystemServiceGroup.UploadService
 var loginLogService = service.ServiceGroupApp.SystemServiceGroup.LoginLogService
+var jobService = service.ServiceGroupApp.SystemServiceGroup.JobService
