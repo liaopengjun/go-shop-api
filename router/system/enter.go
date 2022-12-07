@@ -5,7 +5,8 @@ type RouterGroup struct {
 	BaseRouter
 	MenuRouter
 	AuthorityRouter
-	SysApiRouter
+	ApiRouter
 	UploadRoute
 	LoginLogRouter
+	JobRouter
 }

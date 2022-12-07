@@ -43,6 +43,7 @@ func RegisterTables(db *gorm.DB) {
 		system.SysAuthority{},
 		system.SysApi{},
 		system.SysLoginLog{},
+		system.SysJob{},
 	)
 	if err != nil {
 		zap.L().Error("register table failed", zap.Error(err))

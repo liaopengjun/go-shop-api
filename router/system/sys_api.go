@@ -5,11 +5,11 @@ import (
 	v1 "go-shop-api/api/v1"
 )
 
-type SysApiRouter struct {
+type ApiRouter struct {
 }
 
 // InitApiRouter api模块路由
-func (a *SysApiRouter) InitApiRouter(Router *gin.RouterGroup) {
+func (a *ApiRouter) InitApiRouter(Router *gin.RouterGroup) {
 	sysApiRouter := Router.Group("sys_api")
 	var SysApi = v1.ApiGroupApp.SystemApiGroup.SysApi
 	{

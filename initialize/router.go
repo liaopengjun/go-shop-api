@@ -32,6 +32,7 @@ func Router() *gin.Engine {
 		systemRouter.InitApiRouter(PrivateGroup)       //系统api
 		systemRouter.InitUploadRoute(PrivateGroup)     //上传文件
 		systemRouter.InitLoginLogRouter(PrivateGroup)  //登陆日志
+		systemRouter.InitJobRouterRouter(PrivateGroup) //计划任务
 	}
 
 	ShopGroup := Router.Group("/shop")

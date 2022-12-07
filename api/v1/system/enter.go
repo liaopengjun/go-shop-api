@@ -9,6 +9,7 @@ type ApiGroup struct {
 	SysApi
 	UploadApi
 	LoginLogApi
+	JobApi
 }
 
 var menuService = service.ServiceGroupApp.SystemServiceGroup.MenuService
