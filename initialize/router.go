@@ -13,7 +13,6 @@ import (
 
 //Router 初始化路由
 func Router() *gin.Engine {
-
 	var Router = gin.Default()
 	systemRouter := router.RouterGroupApp.System
 	shopRouter := router.RouterGroupApp.Shop

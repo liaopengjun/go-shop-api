@@ -23,6 +23,7 @@ const (
 	CodeCreateOrderError
 	CodePayOrderError
 	CodeJobExitError
+	CodeJobNotExitError
 )
 
 //定义返回信息
@@ -34,7 +35,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeInvalidPassword:  "用户名或密码错误",
 	CodeServerBusy:       "服务繁忙",
 	CodeInvalidToken:     "登陆信息已过期",
-	CodeNeedLogin:        "需要登录",
+	CodeNeedLogin:        "请先登录用户",
 	CodeMenuExist:        "菜单已存在",
 	CodeMenuChildExist:   "菜单存在下级",
 	CodeAuthExist:        "角色已存在",
@@ -46,6 +47,7 @@ var codeMsgMap = map[ResCode]string{
 	CodeCreateOrderError: "创建订单失败",
 	CodePayOrderError:    "支付订单失败",
 	CodeJobExitError:     "计划任务已存在",
+	CodeJobNotExitError:  "计划任务不存在",
 }
 
 func (c ResCode) Msg() string {

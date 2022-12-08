@@ -85,7 +85,11 @@ func (j *JobApi) DelJob(c *gin.Context) {
 	}
 	err := jobService.DelJob(p.ID)
 	if err != nil {
-		response.ResponseError(c, config.CodeServerBusy)
+		if errors.Is(err, Response.ErrorJobNotExit) {
+			response.ResponseError(c, config.CodeJobNotExitError)
+		} else {
+			response.ResponseError(c, config.CodeServerBusy)
+		}
 		return
 	}
 	response.ResponseSuccess(c, "删除计划任务成功")
@@ -131,7 +135,11 @@ func (j *JobApi) GetJobInfo(c *gin.Context) {
 	}
 	jobInfo, err := jobService.GetJobInfo(p.ID)
 	if err != nil {
-		response.ResponseError(c, config.CodeServerBusy)
+		if errors.Is(err, Response.ErrorJobNotExit) {
+			response.ResponseError(c, config.CodeJobNotExitError)
+		} else {
+			response.ResponseError(c, config.CodeServerBusy)
+		}
 		return
 	}
 	response.ResponseSuccess(c, jobInfo)

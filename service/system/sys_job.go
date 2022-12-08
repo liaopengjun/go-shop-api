@@ -1,9 +1,9 @@
 package system
 
 import (
-	"errors"
 	"go-shop-api/model/system"
 	"go-shop-api/model/system/request"
+	"go-shop-api/model/system/response"
 	"time"
 )
 
@@ -12,7 +12,7 @@ type JobService struct {
 
 func (j *JobService) AddJob(userId uint, p *request.JobParam) (err error) {
 	//校验是否已添加
-	err = system.ExitJob(p.InvokeTarget, p.CronExpression)
+	err = system.ExitJob(p.JobId, p.InvokeTarget, p.CronExpression)
 	if err != nil {
 		return
 	}
@@ -35,12 +35,13 @@ func (j *JobService) AddJob(userId uint, p *request.JobParam) (err error) {
 func (j *JobService) EditJob(userId uint, p *request.JobParam) (err error) {
 
 	//校验是否已存在
-	err = system.ExitJob(p.InvokeTarget, p.CronExpression)
+	err = system.ExitJob(p.JobId, p.InvokeTarget, p.CronExpression)
 	if err != nil {
-		return
+		return err
 	}
 
 	jobData := system.SysJob{
+		JobId:          p.JobId,
 		JobName:        p.JobName,
 		JobType:        p.JobType,
 		CronExpression: p.CronExpression,
@@ -59,13 +60,16 @@ func (j *JobService) DelJob(jobId int) error {
 	// 校验是否存在
 	jobInfo, err, total := system.GetJobInfo(jobId)
 	if err != nil || total == 0 {
-		return errors.New("数据不存在")
+		return response.ErrorJobNotExit
 	}
 	return system.DelJob(jobInfo.JobId)
 }
 
 func (j *JobService) GetJobInfo(jobId int) (jobInfo *system.SysJob, err error) {
-	jobInfo, err, _ = system.GetJobInfo(jobId)
+	jobInfo, err, total := system.GetJobInfo(jobId)
+	if err != nil || total == 0 {
+		return nil, response.ErrorJobNotExit
+	}
 	return
 }
 
