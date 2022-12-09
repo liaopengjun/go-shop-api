@@ -12,7 +12,7 @@ type Timer interface {
 	FindCron(taskName string) (*cron.Cron, bool)
 	StartTask(taskName string)
 	StopTask(taskName string)
-	Remove(taskName string, id int)
+	Remove(taskName string, id int) chan bool
 	Clear(taskName string)
 	Close()
 }
@@ -74,12 +74,17 @@ func (t *timer) StopTask(taskName string) {
 }
 
 // Remove 从taskName 删除指定任务
-func (t *timer) Remove(taskName string, id int) {
+func (t *timer) Remove(taskName string, id int) chan bool {
 	t.Lock()
 	defer t.Unlock()
-	if v, ok := t.taskList[taskName]; ok {
-		v.Remove(cron.EntryID(id))
-	}
+	ch := make(chan bool, 1)
+	go func() {
+		if v, ok := t.taskList[taskName]; ok {
+			v.Remove(cron.EntryID(id))
+			ch <- true
+		}
+	}()
+	return ch
 }
 
 // Clear 清除任务

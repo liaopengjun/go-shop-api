@@ -19,6 +19,6 @@ func (s *JobRouter) InitJobRouterRouter(Router *gin.RouterGroup) {
 		jobRouter.POST("editJob", JobApi.EditJob)          // 编辑任务
 		jobRouter.POST("delJob", JobApi.DelJob)            // 删除任务
 		jobRouter.POST("startJob", JobApi.StartJobService) // 启动任务
-		jobRouter.POST("stopJob", JobApi.StopJobService)   // 停止任务
+		jobRouter.POST("stopJob", JobApi.RemoveJobService) // 停止任务
 	}
 }

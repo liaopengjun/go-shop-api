@@ -73,3 +73,7 @@ func (f *FuncJob) addJob() (int, error) {
 	}
 	return int(EntryId), err
 }
+
+func RemoveJob(name string, entryID int) chan bool {
+	return tm.Remove(name, entryID)
+}
