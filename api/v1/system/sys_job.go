@@ -10,6 +10,7 @@ import (
 	"go-shop-api/model/common/response"
 	"go-shop-api/model/system/request"
 	Response "go-shop-api/model/system/response"
+	"go-shop-api/pkg/timer"
 	"go.uber.org/zap"
 )
 
@@ -147,6 +148,63 @@ func (j *JobApi) GetJobInfo(c *gin.Context) {
 
 // StartJobService 启动计划任务
 func (j *JobApi) StartJobService(c *gin.Context) {
+	var p = new(comReq.GetById)
+	if err := c.ShouldBindJSON(p); err != nil {
+		global.GA_LOG.Error("获取计划详情参数有误", zap.Error(err))
+		response.ResponseError(c, config.CodeInvalidParam)
+		return
+	}
+
+	jobInfo, err := jobService.GetJobInfo(p.ID)
+	if err != nil {
+		if errors.Is(err, Response.ErrorJobNotExit) {
+			response.ResponseError(c, config.CodeJobNotExitError)
+		} else {
+			response.ResponseError(c, config.CodeServerBusy)
+		}
+		return
+	}
+
+	//判断当前状态是否开启
+	if jobInfo.Status == 2 {
+		response.ResponseError(c, config.CodeJobStartError)
+		return
+	}
+
+	// 添加任务
+	entryId := 0
+	if jobInfo.JobType == 1 { //接口
+		j := &timer.HttpJob{}
+		j.InvokeTarget = jobInfo.InvokeTarget
+		j.CronExpression = jobInfo.CronExpression
+		j.JobId = jobInfo.JobId
+		j.Name = jobInfo.JobName
+		entryId, err = timer.AddJob(j)
+	} else { //函数
+		j := &timer.FuncJob{}
+		j.InvokeTarget = jobInfo.InvokeTarget
+		j.CronExpression = jobInfo.CronExpression
+		j.JobId = jobInfo.JobId
+		j.Name = jobInfo.JobName
+		j.Args = jobInfo.Args
+		entryId, err = timer.AddJob(j)
+	}
+
+	if err != nil {
+		global.GA_LOG.Error("启动计划任务失败", zap.Error(err))
+		response.ResponseError(c, config.CodeServerBusy)
+		return
+	}
+
+	// 更新任务id
+	userId, _ := c.Get("userid")
+	err = jobService.EditJobEntry(userId.(uint), jobInfo.JobId, entryId)
+	if err != nil {
+		global.GA_LOG.Error("更新计划任务job失败", zap.Error(err))
+		response.ResponseError(c, config.CodeServerBusy)
+		return
+	}
+	response.ResponseSuccess(c, "启动任务成功")
 
 }
 

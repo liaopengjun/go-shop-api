@@ -24,6 +24,7 @@ const (
 	CodePayOrderError
 	CodeJobExitError
 	CodeJobNotExitError
+	CodeJobStartError
 )
 
 //定义返回信息
@@ -48,6 +49,7 @@ var codeMsgMap = map[ResCode]string{
 	CodePayOrderError:    "支付订单失败",
 	CodeJobExitError:     "计划任务已存在",
 	CodeJobNotExitError:  "计划任务不存在",
+	CodeJobStartError:    "当前任务关闭状态不能被启用，请先启用。",
 }
 
 func (c ResCode) Msg() string {

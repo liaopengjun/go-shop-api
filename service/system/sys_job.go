@@ -12,7 +12,7 @@ type JobService struct {
 
 func (j *JobService) AddJob(userId uint, p *request.JobParam) (err error) {
 	//校验是否已添加
-	err = system.ExitJob(p.JobId, p.InvokeTarget, p.CronExpression)
+	err = system.ExitJob(p.JobId, p.InvokeTarget, p.CronExpression, p.Args)
 	if err != nil {
 		return
 	}
@@ -35,7 +35,7 @@ func (j *JobService) AddJob(userId uint, p *request.JobParam) (err error) {
 func (j *JobService) EditJob(userId uint, p *request.JobParam) (err error) {
 
 	//校验是否已存在
-	err = system.ExitJob(p.JobId, p.InvokeTarget, p.CronExpression)
+	err = system.ExitJob(p.JobId, p.InvokeTarget, p.CronExpression, p.Args)
 	if err != nil {
 		return err
 	}
@@ -52,6 +52,16 @@ func (j *JobService) EditJob(userId uint, p *request.JobParam) (err error) {
 		Status:         p.Status,
 		UpdateBy:       userId,
 		UpdatedAt:      time.Now(),
+	}
+	return system.EditJob(&jobData)
+}
+
+func (j *JobService) EditJobEntry(userId uint, jobId, entryId int) error {
+	jobData := system.SysJob{
+		JobId:     jobId,
+		EntryId:   entryId,
+		UpdateBy:  userId,
+		UpdatedAt: time.Now(),
 	}
 	return system.EditJob(&jobData)
 }

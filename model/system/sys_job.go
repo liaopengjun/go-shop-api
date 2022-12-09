@@ -25,13 +25,13 @@ type SysJob struct {
 	DeletedAt      gorm.DeletedAt `json:"-" gorm:"index;comment:删除时间"`
 }
 
-func ExitJob(jobId int, InvokeTarget, CronExpression string) error {
+func ExitJob(jobId int, InvokeTarget, cronExpression, args string) error {
 	var jobInfo = new(SysJob)
 	db := global.GA_DB.Model(SysJob{})
 	if jobId > 0 {
 		db.Where("job_id != ?", jobId)
 	}
-	if db.Where("invoke_target = ? and cron_expression = ?", InvokeTarget, CronExpression).Find(&jobInfo).RowsAffected >= 1 {
+	if db.Where("invoke_target = ? and cron_expression = ? and args = ? ", InvokeTarget, cronExpression, args).Find(&jobInfo).RowsAffected >= 1 {
 		return response.ErrorJobExit
 	}
 	return nil
