@@ -12,7 +12,7 @@ type MenuService struct {
 //AddMenu 添加菜单
 func (m *MenuService) AddMenu(menu *system.SysMenu) (err error) {
 	//1.查询菜单是否存在
-	if err = system.ExitMenu(menu.Name); err != nil {
+	if err = system.ExitMenu(menu.Name, 0); err != nil {
 		return err
 	}
 	//2.创建菜单
@@ -37,7 +37,7 @@ func (m *MenuService) UpdateMenu(menu *system.SysMenu) (err error) {
 	//检查菜单名称是否存在
 	oldMenu := system.GetMenuInfo(int(menu.ID))
 	if oldMenu.Name != menu.Name {
-		if err = system.ExitMenu(menu.Name); err != nil {
+		if err = system.ExitMenu(menu.Name, menu.ID); err != nil {
 			return err
 		}
 	}

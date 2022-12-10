@@ -19,9 +19,9 @@ type SysMenu struct {
 	Children      []SysMenu      `json:"children" gorm:"-"`
 }
 
-func ExitMenu(name string) (err error) {
+func ExitMenu(name string, id uint) (err error) {
 	menu := new(SysMenu)
-	if global.GA_DB.Where("name = ?", name).Find(&menu).RowsAffected >= 1 {
+	if global.GA_DB.Where("name = ? and id !=? ", name, id).Find(&menu).RowsAffected >= 1 {
 		return response.ErrorMenuExit
 	}
 	return nil
