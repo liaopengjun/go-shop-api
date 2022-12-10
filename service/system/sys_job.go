@@ -1,6 +1,7 @@
 package system
 
 import (
+	"go-shop-api/global"
 	"go-shop-api/model/system"
 	"go-shop-api/model/system/request"
 	"go-shop-api/model/system/response"
@@ -57,13 +58,12 @@ func (j *JobService) EditJob(userId uint, p *request.JobParam) (err error) {
 }
 
 func (j *JobService) EditJobEntry(userId uint, jobId, entryId int) error {
-	jobData := system.SysJob{
-		JobId:     jobId,
-		EntryId:   entryId,
-		UpdateBy:  userId,
-		UpdatedAt: time.Now(),
+	jobData := map[string]interface{}{
+		"UpdateBy":  userId,
+		"EntryId":   entryId,
+		"UpdatedAt": time.Now(),
 	}
-	return system.EditJob(&jobData)
+	return global.GA_DB.Model(system.SysJob{}).Where("job_id = ?", jobId).Updates(jobData).Error
 }
 
 func (j *JobService) DelJob(jobId int) error {

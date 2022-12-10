@@ -2,8 +2,8 @@ package timer
 
 import (
 	"fmt"
+	"github.com/robfig/cron/v3"
 	"go-shop-api/global"
-	"go.uber.org/zap"
 	"time"
 )
 
@@ -36,13 +36,27 @@ type Job interface {
 }
 
 // HttpJob Run 接口请求
-func (h HttpJob) Run() {
-
+func (h *HttpJob) Run() {
+	fmt.Printf("%s [RunJob] HttpJob %s exec success \n", time.Now().Format(global.TIME_FORMAT), h.Name)
 }
 
 // FuncJob Run 函数运行
-func (f FuncJob) Run() {
-
+func (f *FuncJob) Run() {
+	startTime := time.Now()
+	jobF := FuncExecList[f.InvokeTarget]
+	if jobF == nil {
+		return
+	}
+	err := CallExec(jobF.(JobsExec), f.Args)
+	if err != nil {
+		// 如果失败暂停一段时间重试
+		fmt.Println(time.Now().Format(global.TIME_FORMAT), " [ERROR] mission failed! ", err)
+	}
+	// 结束时间
+	endTime := time.Now()
+	// 执行时间
+	latencyTime := endTime.Sub(startTime)
+	fmt.Printf("%s [RunJob] FuncJob %s exec success Time: %s \n", time.Now().Format(global.TIME_FORMAT), f.Name, latencyTime)
 }
 
 func AddJob(job Job) (int, error) {
@@ -54,10 +68,9 @@ func AddJob(job Job) (int, error) {
 
 //  addJob 实现添加接口任务
 func (h *HttpJob) addJob() (int, error) {
-	job := HttpJob{}
-	EntryId, err := tm.AddTaskByJob(h.Name, h.CronExpression, job)
+	EntryId, err := tm.AddTaskByJob(h.Name, h.CronExpression, h, cron.WithSeconds())
 	if err != nil {
-		fmt.Printf("TaskName: %s Time: %s  Error:%s ", h.Name, time.Now().Format(global.TIME_FORMAT), zap.Error(err))
+		fmt.Printf("TaskName: %s Time: %s  Error:%s ", h.Name, time.Now().Format(global.TIME_FORMAT), err)
 		return 0, err
 	}
 	return int(EntryId), err
@@ -65,10 +78,9 @@ func (h *HttpJob) addJob() (int, error) {
 
 // addJob 实现添加系统函数任务
 func (f *FuncJob) addJob() (int, error) {
-	job := FuncJob{}
-	EntryId, err := tm.AddTaskByJob(f.Name, f.CronExpression, job)
+	EntryId, err := tm.AddTaskByJob(f.Name, f.CronExpression, f, cron.WithSeconds())
 	if err != nil {
-		fmt.Printf("TaskName: %s Time: %s  Error:%s ", f.Name, time.Now().Format(global.TIME_FORMAT), zap.Error(err))
+		fmt.Printf("TaskName: %s Time: %s  Error:%s ", f.Name, time.Now().Format(global.TIME_FORMAT), err)
 		return 0, err
 	}
 	return int(EntryId), err

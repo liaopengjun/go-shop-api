@@ -2,6 +2,7 @@ package system
 
 import (
 	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"go-shop-api/config"
@@ -197,6 +198,8 @@ func (j *JobApi) StartJobService(c *gin.Context) {
 		return
 	}
 
+	fmt.Printf("TaskName: %s Time: %s  StartJob success \n", jobInfo.JobName, time.Now().Format(global.TIME_FORMAT))
+
 	// 更新任务id
 	userId, _ := c.Get("userid")
 	err = jobService.EditJobEntry(userId.(uint), jobInfo.JobId, entryId)
@@ -238,6 +241,7 @@ func (j *JobApi) RemoveJobService(c *gin.Context) {
 	select {
 	case res := <-ch:
 		if res {
+			fmt.Printf("TaskName: %s Time: %s  StopJob success \n ", jobInfo.JobName, time.Now().Format(global.TIME_FORMAT))
 			//更新计划任务jobId
 			userId, _ := c.Get("userid")
 			err = jobService.EditJobEntry(userId.(uint), jobInfo.JobId, 0)
