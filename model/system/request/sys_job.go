@@ -7,8 +7,6 @@ type JobParam struct {
 	CronExpression string `json:"cron_expression" binding:"required"`
 	InvokeTarget   string `json:"invoke_target" binding:"required"`
 	Args           string `json:"args"`
-	MisfirePolicy  int    `json:"misfire_policy" binding:"required,numeric"`
-	Concurrent     int    `json:"concurrent" binding:"required,numeric"`
 	Status         int    `json:"status" binding:"required,numeric"`
 }
 
