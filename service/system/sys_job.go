@@ -84,5 +84,9 @@ func (j *JobService) GetJobInfo(jobId int) (jobInfo *system.SysJob, err error) {
 }
 
 func (j *JobService) GetJobList(p *request.JobListParam) (jobList []system.SysJob, total int64, err error) {
-	return system.GetJobList(p.JobName, p.Status, p.JobType, p.Page, p.Limit)
+	return system.GetJobList("List", p.JobName, p.Status, p.JobType, p.Page, p.Limit)
+}
+func (j *JobService) GetStatusJobList() (jobList []system.SysJob, total int64, err error) {
+	return system.GetJobList("StartJobList", "", 1, 0, 0, 0)
+
 }

@@ -55,7 +55,7 @@ func GetJobInfo(jobId int) (job *SysJob, err error, count int64) {
 	return
 }
 
-func GetJobList(jobName string, status, jobType int, page, limit int) (jobList []SysJob, count int64, err error) {
+func GetJobList(action string, jobName string, status, jobType int, page, limit int) (jobList []SysJob, count int64, err error) {
 	db := global.GA_DB.Model(SysJob{})
 	if jobName != "" {
 		db.Where("job_name LIKE ?", "%"+jobName+"%")
@@ -66,8 +66,12 @@ func GetJobList(jobName string, status, jobType int, page, limit int) (jobList [
 	if jobType > 0 {
 		db.Where("job_type = ?", jobType)
 	}
-	err = db.Where("deleted_at is NULL").Count(&count).Error
-	offset := (page - 1) * limit
-	err = db.Where("deleted_at is NULL").Limit(limit).Offset(offset).Order("job_id desc").Find(&jobList).Error
+	if action == "List" {
+		err = db.Where("deleted_at is NULL").Count(&count).Error
+		offset := (page - 1) * limit
+		err = db.Where("deleted_at is NULL").Limit(limit).Offset(offset).Order("job_id desc").Find(&jobList).Error
+	} else {
+		err = db.Where("deleted_at is NULL").Order("job_id desc").Find(&jobList).Error
+	}
 	return
 }

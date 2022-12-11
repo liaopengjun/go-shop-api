@@ -23,6 +23,11 @@ func GetUserTokenBlackList(token string) (val bool, err error) {
 	return global.GA_REDIS.SIsMember(ctx, "user:blacklist", token).Result()
 }
 
+// ClearTokenBlackList 清除黑名单
+func ClearTokenBlackList() error {
+	return global.GA_REDIS.Del(ctx, "user:blacklist").Err()
+}
+
 // GetUserToken 获取用户Token
 func GetUserToken(key string) (token string, err error) {
 	return global.GA_REDIS.Get(context.Background(), key).Result()
@@ -32,11 +37,6 @@ func GetUserToken(key string) (token string, err error) {
 func SetUserToken(key string, token string) (err error) {
 	timer := time.Duration(global.GA_CONFIG.JwtConfig.ExpiresTime) * time.Second
 	return global.GA_REDIS.Set(ctx, key, token, timer).Err()
-}
-
-// DelUserToken 删除用户token
-func DelUserToken(userName string) (err error) {
-	return global.GA_REDIS.Del(ctx, userName).Err()
 }
 
 // SetOrderCloserTime 设置订单过期时间

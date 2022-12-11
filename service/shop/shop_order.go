@@ -90,8 +90,8 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 		}
 
 		closerTime := time.Now().Unix() + global.GA_CONFIG.OrderCloserTime
-		timeStr := time.Unix(closerTime, 0).Format("2006-01-02 15:04:05")
-		t, _ := time.ParseInLocation("2006-01-02 15:04:05", timeStr, time.Local)
+		timeStr := time.Unix(closerTime, 0).Format(global.TIME_FORMAT)
+		t, _ := time.ParseInLocation(global.TIME_FORMAT, timeStr, time.Local)
 
 		//创建订单
 		orderData := shop.ShopOrder{
