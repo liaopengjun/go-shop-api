@@ -16,6 +16,7 @@ import (
 	commonRedis "go-shop-api/pkg/redis"
 	"go-shop-api/utils"
 	"go.uber.org/zap"
+	"time"
 )
 
 type BaseApi struct {
@@ -52,6 +53,11 @@ func (b *BaseApi) Register(c *gin.Context) {
 	}
 	//4.返回响应
 	response.ResponseSuccess(c, "创建成功")
+}
+
+func (b *BaseApi) CronTest(c *gin.Context) {
+	time.Sleep(time.Second * 5)
+	response.ResponseSuccess(c, "success")
 }
 
 // Login 登录用户

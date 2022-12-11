@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/robfig/cron/v3"
 	"go-shop-api/global"
+	"io/ioutil"
+	"net/http"
 	"time"
 )
 
@@ -37,7 +39,30 @@ type Job interface {
 
 // HttpJob Run 接口请求
 func (h *HttpJob) Run() {
-	fmt.Printf("%s [RunJob] HttpJob %s exec success \n", time.Now().Format(global.TIME_FORMAT), h.Name)
+	//开始时间
+	startTime := time.Now()
+
+	//Get执行请求
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", h.InvokeTarget, nil)
+	req.Header.Set("Accept", "*/*")
+	req.Header.Set("Content-Type", "application/json")
+	if err != nil {
+		fmt.Println(time.Now().Format(global.TIME_FORMAT), " [ERROR] NewRequest failed! ", err)
+		return
+	}
+	resp, err := client.Do(req)
+	defer resp.Body.Close()
+	if err != nil {
+		fmt.Println(time.Now().Format(global.TIME_FORMAT), " [ERROR] resp failed! ", err)
+		return
+	}
+	result, _ := ioutil.ReadAll(resp.Body)
+	// 结束时间
+	endTime := time.Now()
+	// 执行时间
+	latencyTime := endTime.Sub(startTime)
+	fmt.Printf("%s [RunJob] HttpJob %s  success Time: %s result: %s \n", time.Now().Format(global.TIME_FORMAT), h.Name, latencyTime, string(result))
 }
 
 // FuncJob Run 函数运行
@@ -49,14 +74,13 @@ func (f *FuncJob) Run() {
 	}
 	err := CallExec(jobF.(JobsExec), f.Args)
 	if err != nil {
-		// 如果失败暂停一段时间重试
 		fmt.Println(time.Now().Format(global.TIME_FORMAT), " [ERROR] mission failed! ", err)
 	}
 	// 结束时间
 	endTime := time.Now()
 	// 执行时间
 	latencyTime := endTime.Sub(startTime)
-	fmt.Printf("%s [RunJob] FuncJob %s exec success Time: %s \n", time.Now().Format(global.TIME_FORMAT), f.Name, latencyTime)
+	fmt.Printf("%s [RunJob] FuncJob %s success Time: %s \n", time.Now().Format(global.TIME_FORMAT), f.Name, latencyTime)
 }
 
 func AddJob(job Job) (int, error) {
