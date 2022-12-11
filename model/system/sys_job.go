@@ -58,7 +58,7 @@ func GetJobInfo(jobId int) (job *SysJob, err error, count int64) {
 func GetJobList(jobName string, status, jobType int, page, limit int) (jobList []SysJob, count int64, err error) {
 	db := global.GA_DB.Model(SysJob{})
 	if jobName != "" {
-		db.Where("job_name = ?", jobName)
+		db.Where("job_name LIKE ?", "%"+jobName+"%")
 	}
 	if status > 0 {
 		db.Where("status = ?", status)

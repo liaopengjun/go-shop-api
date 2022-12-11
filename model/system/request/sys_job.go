@@ -1,11 +1,11 @@
 package request
 
 type JobParam struct {
-	JobId          int    `json:"job_id"`
-	JobName        string `json:"job_name" binding:"required"`
-	JobType        int    `json:"job_type" binding:"required"`
-	CronExpression string `json:"cron_expression" binding:"required"`
-	InvokeTarget   string `json:"invoke_target" binding:"required"`
+	JobId          int    `json:"jobId"`
+	JobName        string `json:"jobName" binding:"required"`
+	JobType        int    `json:"jobType" binding:"required"`
+	CronExpression string `json:"cronExpression" binding:"required"`
+	InvokeTarget   string `json:"invokeTarget" binding:"required"`
 	Args           string `json:"args"`
 	Status         int    `json:"status" binding:"required,numeric"`
 }

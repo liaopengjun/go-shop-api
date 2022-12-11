@@ -68,6 +68,10 @@ func (j *JobService) DelJob(jobId int) error {
 	if err != nil || total == 0 {
 		return response.ErrorJobNotExit
 	}
+	// 运行中任务无法删除
+	if jobInfo.EntryId > 0 {
+		return response.ErrorJobInService
+	}
 	return system.DelJob(jobInfo.JobId)
 }
 

@@ -90,6 +90,8 @@ func (j *JobApi) DelJob(c *gin.Context) {
 	if err != nil {
 		if errors.Is(err, Response.ErrorJobNotExit) {
 			response.ResponseError(c, config.CodeJobNotExitError)
+		} else if errors.Is(err, Response.ErrorJobInService) {
+			response.ResponseError(c, config.CodeJobInServiceError)
 		} else {
 			response.ResponseError(c, config.CodeServerBusy)
 		}
