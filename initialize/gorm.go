@@ -38,9 +38,9 @@ func Gorm() *gorm.DB {
 // RegisterTables 注册数据库表专用
 func RegisterTables(db *gorm.DB) {
 	err := db.AutoMigrate(
+		system.SysAuthority{},
 		system.SysUser{},
 		system.SysMenu{},
-		system.SysAuthority{},
 		system.SysApi{},
 		system.SysLoginLog{},
 		system.SysJob{},

@@ -10,12 +10,12 @@ import (
 type SysAuthority struct {
 	CreatedAt       time.Time      // 创建时间
 	UpdatedAt       time.Time      // 更新时间
-	DeletedAt       gorm.DeletedAt `gorm:"index" json:"-"`                                              // 删除时间
-	AuthorityId     string         `json:"authorityId" gorm:"not null;unique;primary_key;comment:角色ID"` // 角色ID
-	AuthorityName   string         `json:"authorityName" gorm:"comment:角色名"`                            // 角色名
-	ParentId        string         `json:"parentId" gorm:"comment:父角色ID"`                               // 父角色ID
+	DeletedAt       gorm.DeletedAt `gorm:"index" json:"-"`                                                      // 删除时间
+	AuthorityId     string         `json:"authorityId" gorm:"not null;unique;primary_key;size:20;comment:角色ID"` // 角色ID
+	AuthorityName   string         `json:"authorityName" gorm:"comment:角色名"`                                    // 角色名
+	ParentId        string         `json:"parentId" gorm:"size:20;comment:父角色ID"`                               // 父角色ID
 	Status          *int           `json:"status" gorm:"size:4;comment:状态0:默认正常1:已禁用"`
-	DataAuthorityId []SysAuthority `json:"dataAuthorityId" gorm:"many2many:sys_data_authority_id"`
+	DataAuthorityId []SysAuthority `json:"dataAuthorityId" gorm:"many2many:sys_data_authority_id;size:20;"`
 	SysMenus        []SysMenu      `json:"menus" gorm:"many2many:sys_authority_menus;"`
 	Children        []SysAuthority `json:"children" gorm:"-"`
 }
