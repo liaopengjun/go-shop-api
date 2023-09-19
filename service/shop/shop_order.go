@@ -130,13 +130,14 @@ func (o *ShopOrderService) CreateOrder(p *request.SaveOrderParam, userId uint) (
 		//事务结束
 		return nil
 	})
-	//写入redis
-	key := "shop:order:closer:" + orderCode
-	err = redis.SetOrderCloserTime(key, orderCode)
-	if err != nil {
-		return orderCode, response.ErrCreateOrder
+	if global.GA_CONFIG.UserRedis {
+		//写入redis
+		key := "shop:order:closer:" + orderCode
+		err = redis.SetOrderCloserTime(key, orderCode)
+		if err != nil {
+			return orderCode, response.ErrCreateOrder
+		}
 	}
-
 	return orderCode, err
 }
 

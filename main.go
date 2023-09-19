@@ -5,6 +5,7 @@ import (
 	"go-shop-api/api/v1/system"
 	"go-shop-api/global"
 	"go-shop-api/initialize"
+	"go-shop-api/pkg/timer"
 )
 
 func main() {
@@ -26,8 +27,8 @@ func main() {
 	}
 	Router := initialize.Router()
 	//启动计划任务
-	//go func() {
-	//	timer.InitJob()
-	//}()
+	go func() {
+		timer.InitJob()
+	}()
 	Router.Run(fmt.Sprintf(":%d", global.GA_CONFIG.ApplicationConfig.Port))
 }
