@@ -7,7 +7,7 @@ import (
 	"go-shop-api/global"
 )
 
-var pathConfig = "config.yaml"
+var pathConfig = "./config/config.yaml"
 
 // Viper 初始化管理配置
 func Viper(path string) *viper.Viper {

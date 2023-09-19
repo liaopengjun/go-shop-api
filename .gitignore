@@ -8,6 +8,6 @@ out
 gen
 log
 uploads
-config.yaml
-!/config.yaml
-/config.yaml
+config/config.yaml
+!/config/config.yaml
+/config/config.yaml
