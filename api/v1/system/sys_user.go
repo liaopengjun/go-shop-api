@@ -57,7 +57,7 @@ func (b *BaseApi) Register(c *gin.Context) {
 
 func (b *BaseApi) CronTest(c *gin.Context) {
 	time.Sleep(time.Second * 5)
-	response.ResponseSuccess(c, "success")
+	response.ResponseSuccess(c, "测试脚本")
 }
 
 // Login 登录用户
