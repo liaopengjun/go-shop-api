@@ -1,4 +1,4 @@
-FROM centos:7.9
+FROM centos:7
 
 #工作目录
 WORKDIR /root/go-shop-api
